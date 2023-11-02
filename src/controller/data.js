@@ -5,18 +5,320 @@ const asyncHandler = require("express-async-handler");
 
 const getData = async (req, res) => {
   try {
-    const data = await Local.find().limit(10);
-    // console.log(data);
+    const { start, length, geo } = req.body;
+
+    const data = await Local.find(
+      {
+        // country_code: {
+        //   $in: [
+        //     "AD",
+        //     "AE",
+        //     "AF",
+        //     "AG",
+        //     "AI",
+        //     "AL",
+        //     "AM",
+        //     "AO",
+        //     "AQ",
+        //     "AR",
+        //     "AS",
+        //     "AT",
+        //     "AU",
+        //     "AW",
+        //     "AZ",
+        //     "BA",
+        //     "BB",
+        //     "BD",
+        //     "BE",
+        //     "BF",
+        //     "BG",
+        //     "BH",
+        //     "BI",
+        //     "BJ",
+        //     "BL",
+        //     "BM",
+        //     "BN",
+        //     "BO",
+        //     "BQ",
+        //     "BR",
+        //     "BS",
+        //     "BT",
+        //     "BV",
+        //     "BW",
+        //     "BY",
+        //     "BZ",
+        //     "CA",
+        //     "CC",
+        //     "CD",
+        //     "CF",
+        //     "CG",
+        //     "CH",
+        //     "CI",
+        //     "CK",
+        //     "CL",
+        //     "CM",
+        //     "CN",
+        //     "CO",
+        //     "CR",
+        //     "CU",
+        //     "CV",
+        //     "CW",
+        //     "CX",
+        //     "CY",
+        //     "CZ",
+        //     "DE",
+        //     "DJ",
+        //     "DK",
+        //     "DM",
+        //     "DO",
+        //     "DZ",
+        //     "EC",
+        //     "EE",
+        //     "EG",
+        //     "EH",
+        //     "ER",
+        //     "ES",
+        //     "ET",
+        //     "FI",
+        //     "FJ",
+        //     "FK",
+        //     "FM",
+        //     "FO",
+        //     "FR",
+        //     "GA",
+        //     "GB",
+        //     "GD",
+        //     "GE",
+        //     "GF",
+        //     "GG",
+        //     "GH",
+        //     "GI",
+        //     "GL",
+        //     "GM",
+        //     "GN",
+        //     "GP",
+        //     "GQ",
+        //     "GR",
+        //     "GS",
+        //     "GT",
+        //     "GU",
+        //     "GW",
+        //     "GY",
+        //     "HK",
+        //     "HM",
+        //     "HN",
+        //     "HR",
+        //     "HT",
+        //     "HU",
+        //     "ID",
+        //     "IE",
+        //     "IL",
+        //     "IM",
+        //     "IN",
+        //     "IO",
+        //     "IQ",
+        //     "IR",
+        //     "IS",
+        //     "IT",
+        //     "JE",
+        //     "JM",
+        //     "JO",
+        //     "JP",
+        //     "KE",
+        //     "KG",
+        //     "KH",
+        //     "KI",
+        //     "KM",
+        //     "KN",
+        //     "KP",
+        //     "KR",
+        //     "KW",
+        //     "KY",
+        //     "KZ",
+        //     "LA",
+        //     "LB",
+        //     "LC",
+        //     "LI",
+        //     "LK",
+        //     "LR",
+        //     "LS",
+        //     "LT",
+        //     "LU",
+        //     "LV",
+        //     "LY",
+        //     "MA",
+        //     "MC",
+        //     "MD",
+        //     "ME",
+        //     "MF",
+        //     "MG",
+        //     "MH",
+        //     "MK",
+        //     "ML",
+        //     "MM",
+        //     "MN",
+        //     "MO",
+        //     "MP",
+        //     "MQ",
+        //     "MR",
+        //     "MS",
+        //     "MT",
+        //     "MU",
+        //     "MV",
+        //     "MW",
+        //     "MX",
+        //     "MY",
+        //     "MZ",
+        //     "NC",
+        //     "NE",
+        //     "NF",
+        //     "NG",
+        //     "NI",
+        //     "NL",
+        //     "NO",
+        //     "NP",
+        //     "NR",
+        //     "NZ",
+        //     "OM",
+        //     "PA",
+        //     "PE",
+        //     "PF",
+        //     "PG",
+        //     "PH",
+        //     "PK",
+        //     "PL",
+        //     "PM",
+        //     "PN",
+        //     "PR",
+        //     "PS",
+        //     "PT",
+        //     "PW",
+        //     "PY",
+        //     "QA",
+        //     "RE",
+        //     "RO",
+        //     "RS",
+        //     "RU",
+        //     "RW",
+        //     "SA",
+        //     "SB",
+        //     "SC",
+        //     "SD",
+        //     "SE",
+        //     "SG",
+        //     "SH",
+        //     "SI",
+        //     "SJ",
+        //     "SK",
+        //     "SL",
+        //     "SM",
+        //     "SN",
+        //     "SO",
+        //     "SR",
+        //     "SS",
+        //     "ST",
+        //     "SV",
+        //     "SX",
+        //     "SY",
+        //     "SZ",
+        //     "TC",
+        //     "TD",
+        //     "TF",
+        //     "TG",
+        //     "TH",
+        //     "TJ",
+        //     "TK",
+        //     "TL",
+        //     "TM",
+        //     "TN",
+        //     "TO",
+        //     "TR",
+        //     "TT",
+        //     "TV",
+        //     "TW",
+        //     "TZ",
+        //     "UA",
+        //     "UG",
+        //     "UM",
+        //     "US",
+        //     "UY",
+        //     "UZ",
+        //     "VA",
+        //     "VC",
+        //     "VE",
+        //     "VG",
+        //     "VI",
+        //     "VN",
+        //     "VU",
+        //     "WF",
+        //     "WS",
+        //     "XK",
+        //     "YE",
+        //     "YT",
+        //     "ZA",
+        //     "ZM",
+        //     "ZW",
+        //   ],
+        // },
+        region: "AF",
+      },
+      { country_code: 1, region: 1, _id: 0 }
+    ).limit(10000000);
+    console.log(data);
+
+    const dis = await data.distinct("country_code");
+
+    // const count = await Local.countDocuments({ region: "" });
     if (!data) {
       res
         .status(404)
         .json({ status: 404, error: "404", message: "Data Not Found" });
       return;
     }
-    res.status(200).json(data);
+
+    const result = {
+      dis: dis,
+      // data: data,
+    };
+    res.status(200).json(result);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const totalFilterRecords = async (req, res) => {
+  try {
+    const { start, length, geo } = req.body;
+
+    const filteredData = await Local.find({ country_code: "IN" })
+      .limit(length)
+      .skip(start);
+
+    const count = await Local.countDocuments({ country_code: "IN" });
+    console.log("count", count);
+
+    if (!filteredData) {
+      res.status(404).json({
+        status: 404,
+        error: "404",
+        message: "Data Not Found",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      data: filteredData,
+      totalRecords: count,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      status: 500,
+      error: "Internal Server Error",
+      message: "An error occurred",
+    });
   }
 };
 
@@ -304,19 +606,14 @@ const crmData = asyncHandler(async (req, res) => {
       intentSignals,
     } = req.body;
 
-    // Prepare filter queries
     const filters = [];
 
-    // Handle companySize filter
     if (companySize && companySize.length > 0) {
       filters.push({ company_size: { $in: companySize } });
     }
 
-    // Handle geo filter
     if (geo && geo.length > 0) {
-      const geoFilter = {
-        // Define your geo mapping here
-      };
+      const geoFilter = {};
 
       const countryCodes = geo.flatMap((g) => geoFilter[g] || []);
 
@@ -325,35 +622,28 @@ const crmData = asyncHandler(async (req, res) => {
       }
     }
 
-    // Handle industry filter
     if (industry && industry.length > 0) {
       filters.push({ industries: { $in: industry } });
     }
 
-    // Handle jobFunction filter
     if (jobFunction && jobFunction.length > 0) {
       filters.push({ employees: { $in: jobFunction } });
     }
 
-    // Handle intentSignals filter
     if (intentSignals && intentSignals.length > 0) {
       filters.push({ specialties: { $in: intentSignals } });
     }
 
-    // Construct the final query
     const query = filters.length > 0 ? { $and: filters } : {};
 
-    // Count filtered records and total records using aggregation
     const [recordsFiltered, totalRecords] = await Promise.all([
       Local.aggregate([{ $match: query }, { $count: "count" }]).exec(),
       Local.countDocuments(),
     ]);
 
-    // Calculate pagination values
     const totalPages = Math.ceil(recordsFiltered[0]?.count / length);
     const currentPage = Math.floor(start / length);
 
-    // Find filtered records with pagination
     const data = await Local.find(query).skip(start).limit(length).exec();
 
     const regionMappings = {
@@ -518,7 +808,6 @@ const crmData = asyncHandler(async (req, res) => {
       total: 0,
     };
 
-    // Add region counts to the regionResult
     regionCounts.forEach(({ _id, count }) => {
       const region = Object.keys(regionMappings).find((key) =>
         regionMappings[key].includes(_id)
@@ -536,7 +825,6 @@ const crmData = asyncHandler(async (req, res) => {
       total: 0,
     };
 
-    // Add company size counts to the companySizeResult
     companySizeCounts.forEach(({ company_size, count }) => {
       companySizeResult[company_size] = count;
       companySizeResult.total += count;
@@ -555,4 +843,5 @@ module.exports = {
   chartForCompanySize,
   chartForRegion,
   crmData,
+  totalFilterRecords,
 };

@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 // const helmet = require('helmet');
 const cors = require("cors");
 const crmRoutes = require("./src/route/data");
+const employeeRoutes = require("./src/route/employee");
 const connectDb = require("./src/config/config");
 // const roleRoutes = require('./src/routes/roleRoutes');
 // const userRoutes = require('./src/routes/userRoutes');
@@ -30,6 +31,7 @@ app.use(cors());
 app.use(express.static("public"));
 
 app.use("/data", crmRoutes);
+app.use("/data", employeeRoutes);
 // app.use(helmet());
 // app.use((req,res,next) =>{
 //   logger.info(`${req.method} ${req.url} ${req.ip} ${req.hostname} ${new Date()} ${req.get('User-Agent')}`);

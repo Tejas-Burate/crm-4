@@ -5,13 +5,15 @@ const {
   chartForCompanySize,
   chartForRegion,
   crmData,
+  totalFilterRecords,
 } = require("../controller/data");
 
 const router = express.Router();
 
-router.get("/getData", getData);
+router.post("/getData", getData);
 router.post("/getDataTable", getDataTable);
 router.get("/chartForCompanySize", chartForCompanySize);
 router.get("/chartForRegion", chartForRegion);
 router.post("/crmData", crmData);
+router.post("/totalFilterRecords", totalFilterRecords);
 module.exports = router;
