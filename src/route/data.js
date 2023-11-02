@@ -5,6 +5,7 @@ const {
   chartForCompanySize,
   chartForRegion,
   crmData,
+  chartForRegionNorthAmerica,
   totalFilterRecords,
 } = require("../controller/data");
 
@@ -14,6 +15,7 @@ router.post("/getData", getData);
 router.post("/getDataTable", getDataTable);
 router.get("/chartForCompanySize", chartForCompanySize);
 router.get("/chartForRegion", chartForRegion);
+router.get("/chartForRegionNorthAmerica", chartForRegionNorthAmerica);
 router.post("/crmData", crmData);
 router.post("/totalFilterRecords", totalFilterRecords);
 module.exports = router;

@@ -100,6 +100,7 @@ const employeeFilter = async (req, res) => {
     // Execute the aggregation pipeline
     const data = await Employee.aggregate(pipeline);
     const t = await Employee.countDocuments(match);
+    const totalPage = Math.ceil(t / length);
 
     const totalRecords = data.length; // Total filtered records
 
@@ -115,6 +116,7 @@ const employeeFilter = async (req, res) => {
     const result = {
       totalRecords: t,
       recordsPerPage: length,
+      totalPages: totalPage,
       filteredRecords: totalRecords,
       data: data,
     };
@@ -125,6 +127,73 @@ const employeeFilter = async (req, res) => {
     res
       .status(500)
       .json({ status: 500, error: "500", message: "Internal Server Error" });
+  }
+};
+
+const searchByJobTitle = async (req, res) => {
+  try {
+    const { jobTitle, start, length, sortField, sortOrder } = req.body;
+
+    if (!jobTitle || !Array.isArray(jobTitle)) {
+      res.status(400).json({
+        status: 400,
+        error: "400",
+        message: "jobTitle parameter is required and should be an array",
+      });
+      return;
+    }
+
+    // Create a regular expression pattern for each job title in the array
+    const regexPatterns = jobTitle.map((title) => new RegExp(title, "i"));
+
+    // Define the aggregation pipeline stages
+    const pipeline = [
+      {
+        $match: { jobTitle: { $in: regexPatterns } },
+      },
+    ];
+
+    // Add sorting to the pipeline if specified
+    if (sortField) {
+      const sort = {};
+      sort[sortField] = sortOrder === "asc" ? 1 : -1;
+      pipeline.push({ $sort: sort });
+    }
+
+    // Add pagination to the pipeline
+    pipeline.push({ $skip: start });
+    pipeline.push({ $limit: length });
+
+    // Execute the aggregation pipeline
+    const data = await Employee.aggregate(pipeline);
+
+    // Calculate the total count based on the matching criteria
+    const countPipeline = [...pipeline]; // Clone the pipeline
+    countPipeline.pop(); // Remove the $skip and $limit stages
+    const count = await Employee.aggregate([
+      ...countPipeline,
+      { $count: "count" },
+    ]);
+    const totalRecords = count.length > 0 ? count[0].count : 0;
+
+    // Calculate the total pages and filtered pages
+    const totalPages = Math.ceil(totalRecords / length);
+    const filteredPages = Math.ceil(data.length / length);
+
+    res.status(200).json({
+      totalRecords,
+      totalPages,
+      filteredRecords: data.length,
+      filteredPages,
+      data,
+    });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({
+      status: 500,
+      error: "500",
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -156,4 +225,5 @@ const employeeFilter = async (req, res) => {
 module.exports = {
   getAllCompanyList,
   employeeFilter,
+  searchByJobTitle,
 };

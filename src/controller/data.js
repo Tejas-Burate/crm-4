@@ -514,6 +514,28 @@ const chartForRegion = asyncHandler(async (req, res) => {
   }
 });
 
+const chartForRegionNorthAmerica = async (req, res) => {
+  try {
+    const amr = { "North America": ["US", "CA", "MX", "GL", "BM", "PM"] };
+
+    const data = await Local.find({
+      region: { $in: ["US", "CA", "MX", "GL", "BM", "PM"] },
+    });
+
+    if (!data) {
+      res
+        .status(404)
+        .json({ status: 404, error: "404", message: "Data Not Found" });
+      return;
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ error: "500", message: "Internal Server Error" });
+  }
+};
+
 const getDataTable = asyncHandler(async (req, res) => {
   try {
     const {
@@ -839,6 +861,7 @@ const crmData = asyncHandler(async (req, res) => {
 
 module.exports = {
   getData,
+  chartForRegionNorthAmerica,
   getDataTable,
   chartForCompanySize,
   chartForRegion,
