@@ -92,13 +92,14 @@ const employeeFilter = async (req, res) => {
 
     pipeline.push({ $match: match });
 
-    const dataCount = await Employee.countDocuments(pipeline);
+    // const dataCount = await Employee.countDocuments(pipeline);
     // Skip and limit the results
     pipeline.push({ $skip: start });
     pipeline.push({ $limit: length });
 
     // Execute the aggregation pipeline
     const data = await Employee.aggregate(pipeline);
+    const t = await Employee.countDocuments(match);
 
     const totalRecords = data.length; // Total filtered records
 
@@ -112,7 +113,7 @@ const employeeFilter = async (req, res) => {
     }
 
     const result = {
-      totalRecords: dataCount,
+      totalRecords: t,
       recordsPerPage: length,
       filteredRecords: totalRecords,
       data: data,
