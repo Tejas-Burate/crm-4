@@ -266,8 +266,18 @@ const searchByDepartment = async (req, res) => {
 
 const searchByDepartmentAndJobTitle = async (req, res) => {
   try {
-    const { department, jobTitle, start, length, sortField, sortOrder } =
-      req.body;
+    const {
+      department,
+      jobTitle,
+      start,
+      length,
+      sortField,
+      sortOrder,
+      continent,
+      region,
+      searchByCompanyAndEmail,
+      search,
+    } = req.body;
 
     if (!Array.isArray(department) || !Array.isArray(jobTitle)) {
       res.status(400).json({
@@ -295,6 +305,33 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
         },
       },
     ];
+
+    // Filter by region if specified
+    if (region) {
+      pipeline[0].$match.region = { $in: region };
+    }
+
+    if (searchByCompanyAndEmail) {
+      pipeline.push({
+        $match: {
+          $or: [
+            { email: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
+            {
+              companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") },
+            },
+          ],
+        },
+      });
+    }
+
+    // Apply search if specified
+    if (search) {
+      pipeline.push({
+        $match: {
+          fullName: { $regex: new RegExp(search, "i") },
+        },
+      });
+    }
 
     // Add sorting to the pipeline if specified
     if (sortField) {

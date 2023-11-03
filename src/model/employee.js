@@ -14,8 +14,8 @@ const employeeSchema = new mongoose.Schema(
     hqLocation: String,
     prospectLocation: String,
     hqNumber: String,
-  }
-  // { collection: "employee" }
+  },
+  { collection: "employee-data" }
 );
 
 const Employee = mongoose.model("Employee", employeeSchema);
