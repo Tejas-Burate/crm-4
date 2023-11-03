@@ -274,26 +274,25 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       sortField,
       sortOrder,
       continent,
-      region,
       searchByCompanyAndEmail,
       search,
     } = req.body;
 
-    if (!Array.isArray(department) || !Array.isArray(jobTitle)) {
+    if (!Array.isArray(department)) {
       res.status(400).json({
         status: 400,
         error: "400",
-        message: "department and jobTitle parameters should be arrays",
+        message: "department parameter should be an array",
       });
       return;
     }
 
+    const total = await Employee.countDocuments();
+    console.log("total", total);
+
     // Create regular expression patterns for department and jobTitle arrays
     const departmentRegexPatterns = department.map(
       (dept) => new RegExp(dept, "i")
-    );
-    const jobTitleRegexPatterns = jobTitle.map(
-      (title) => new RegExp(title, "i")
     );
 
     // Define the aggregation pipeline stages
@@ -301,14 +300,20 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       {
         $match: {
           department: { $in: departmentRegexPatterns },
-          jobTitle: { $in: jobTitleRegexPatterns },
         },
       },
     ];
 
-    // Filter by region if specified
-    if (region) {
-      pipeline[0].$match.region = { $in: region };
+    // Apply additional filters if specified
+    if (jobTitle.length > 0) {
+      const jobTitleRegexPatterns = jobTitle.map(
+        (title) => new RegExp(title, "i")
+      );
+      pipeline[0].$match.jobTitle = { $in: jobTitleRegexPatterns };
+    }
+
+    if (continent && continent.length > 0) {
+      pipeline[0].$match.continent = { $in: continent };
     }
 
     if (searchByCompanyAndEmail) {
