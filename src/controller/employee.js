@@ -1,4 +1,5 @@
 const Employee = require("../model/employee");
+const Data = require("../model/data");
 
 const getAllCompanyList = async (req, res) => {
   try {
@@ -434,7 +435,7 @@ const continentsToCountries = {
     "United Kingdom",
     "United Kingdom of Great Britain and Northern Ireland",
   ],
-  America: [
+  NorthAmerica: [
     "Anguilla",
     "Antigua and Barbuda",
     "Aruba",
@@ -476,8 +477,9 @@ const continentsToCountries = {
     "Sint Maarten (Dutch part)",
     "Trinidad and Tobago",
     "Turks and Caicos Islands",
-    "United States of America",
     "United States Virgin Islands",
+  ],
+  SouthAmerica: [
     "Argentina",
     "Bolivia (Plurinational State of)",
     "Bouvet Island",
@@ -623,6 +625,16 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       error: "500",
       message: "Internal Server Error",
     });
+  }
+};
+
+const accountCount = async (req, res) => {
+  try {
+    const cnt = await Data.countDocuments();
+    res.status(200).json({ count: cnt });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ error: "An error occurred" });
   }
 };
 
@@ -815,6 +827,7 @@ const filterEmailAndCompanyName = async (req, res) => {
 
 module.exports = {
   getAllCompanyList,
+  accountCount,
   employeeFilter,
   searchByJobTitle,
   searchByDepartment,

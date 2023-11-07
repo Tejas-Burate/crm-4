@@ -7,11 +7,13 @@ const {
   searchByDepartment,
   searchByDepartmentAndJobTitle,
   filterEmailAndCompanyName,
+  accountCount,
 } = require("../controller/employee");
 
 const router = express.Router();
 
 router.get("/getAllCompanyList", getAllCompanyList);
+router.get("/accountCount", accountCount);
 router.post("/employeeFilter", employeeFilter);
 router.post("/searchByJobTitle", searchByJobTitle);
 router.post("/searchByDepartment", searchByDepartment);
