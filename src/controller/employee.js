@@ -788,13 +788,13 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     res.status(200).json({
       totalRecords,
-      totalPages,
+      totalPage,
       filteredRecords: data.length,
       filteredPages,
       data,
     });
 
-    res.status(200).json(result);
+    // res.status(200).json(result);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({

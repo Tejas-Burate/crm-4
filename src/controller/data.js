@@ -902,7 +902,7 @@ const accountData = async (req, res) => {
       jobFunction,
       intentSignals,
       searchByCompanyAndWebsite,
-    } = req.body || {};
+    } = req.body;
 
     const pipeline = [];
 

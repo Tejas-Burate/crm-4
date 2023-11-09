@@ -15,8 +15,8 @@ const employeeSchema = new mongoose.Schema(
     prospectLocation: String,
     hqNumber: String,
   },
-  // { collection: "employee-data" }
-  { collection: "tempContact" }
+  { collection: "employee-data" }
+  // { collection: "tempContact" }
 );
 
 const Employee = mongoose.model("Employee", employeeSchema);
