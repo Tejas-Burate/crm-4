@@ -287,6 +287,16 @@ const getData = async (req, res) => {
   }
 };
 
+const chartForIndustry = async (req, res) => {
+  try {
+    const industry = await Local.distinct("industries");
+    res.status(industry);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json("Internal Server Error");
+  }
+};
+
 const totalFilterRecords = async (req, res) => {
   try {
     const { start, length, geo } = req.body;
@@ -616,6 +626,366 @@ const getDataTable = asyncHandler(async (req, res) => {
   }
 });
 
+const regions = {
+  Africa: [
+    "DZ",
+    "AO",
+    "BJ",
+    "BW",
+    "IO",
+    "BF",
+    "BI",
+    "CV",
+    "CM",
+    "CF",
+    "TD",
+    "KM",
+    "CG",
+    "CD",
+    "CI",
+    "DJ",
+    "EG",
+    "GQ",
+    "ER",
+    "SZ",
+    "ET",
+    "TF",
+    "GA",
+    "GM",
+    "GH",
+    "GN",
+    "GW",
+    "KE",
+    "LS",
+    "LR",
+    "LY",
+    "MG",
+    "MW",
+    "ML",
+    "MR",
+    "MU",
+    "YT",
+    "MA",
+    "MZ",
+    "NA",
+    "NE",
+    "NG",
+    "RE",
+    "RW",
+    "SH",
+    "ST",
+    "SN",
+    "SC",
+    "SL",
+    "SO",
+    "ZA",
+    "SS",
+    "SD",
+    "TZ",
+    "TG",
+    "TN",
+    "UG",
+    "EH",
+    "ZM",
+    "ZW",
+  ],
+  Asia: [
+    "AF",
+    "AM",
+    "AZ",
+    "BH",
+    "BD",
+    "BT",
+    "BN",
+    "KH",
+    "CN",
+    "CY",
+    "GE",
+    "HK",
+    "IN",
+    "ID",
+    "IR",
+    "IQ",
+    "IL",
+    "JP",
+    "JO",
+    "KZ",
+    "KP",
+    "KR",
+    "KW",
+    "KG",
+    "LA",
+    "LB",
+    "MO",
+    "MY",
+    "MV",
+    "MN",
+    "MM",
+    "NP",
+    "OM",
+    "PK",
+    "PS",
+    "PH",
+    "QA",
+    "SA",
+    "SG",
+    "LK",
+    "SY",
+    "TW",
+    "TJ",
+    "TH",
+    "TL",
+    "TR",
+    "TM",
+    "AE",
+    "UZ",
+    "VN",
+    "YE",
+  ],
+  Australia: [
+    "AS",
+    "AU",
+    "CX",
+    "CC",
+    "CK",
+    "FJ",
+    "PF",
+    "GU",
+    "HM",
+    "KI",
+    "MH",
+    "FM",
+    "NR",
+    "NC",
+    "NZ",
+    "NU",
+    "NF",
+    "MP",
+    "PW",
+    "PG",
+    "PN",
+    "WS",
+    "SB",
+    "TK",
+    "TO",
+    "TV",
+    "UM",
+    "VU",
+    "WF",
+  ],
+  Europe: [
+    "AX",
+    "AX",
+    "AL",
+    "AD",
+    "AT",
+    "BY",
+    "BE",
+    "BA",
+    "BA",
+    "BG",
+    "HR",
+    "CZ",
+    "DK",
+    "EE",
+    "FO",
+    "FI",
+    "FR",
+    "DE",
+    "GI",
+    "GR",
+    "GG",
+    "VA",
+    "HU",
+    "IS",
+    "IE",
+    "IM",
+    "IT",
+    "JE",
+    "LV",
+    "LI",
+    "LT",
+    "LU",
+    "MT",
+    "MD",
+    "MC",
+    "ME",
+    "NL",
+    "MK",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RU",
+    "SM",
+    "RS",
+    "SK",
+    "SI",
+    "ES",
+    "SJ",
+    "SE",
+    "CH",
+    "UA",
+    "GB",
+  ],
+  NorthAmerica: [
+    "BZ",
+    "BM",
+    "CA",
+    "CR",
+    "SV",
+    "GL",
+    "GT",
+    "HN",
+    "MX",
+    "NI",
+    "PA",
+    "PM",
+    "US",
+  ],
+  SouthAmerica: [
+    "AI",
+    "AG",
+    "AR",
+    "AW",
+    "BS",
+    "BB",
+    "BO",
+    "BQ",
+    "BV",
+    "BR",
+    "KY",
+    "CL",
+    "CO",
+    "CU",
+    "CW",
+    "DM",
+    "DO",
+    "EC",
+    "FK",
+    "GF",
+    "GD",
+    "GP",
+    "GY",
+    "HT",
+    "JM",
+    "MQ",
+    "MS",
+    "PY",
+    "PE",
+    "PR",
+    "BL",
+    "KN",
+    "LC",
+    "MF",
+    "VC",
+    "SX",
+    "GS",
+    "SR",
+    "TT",
+    "TC",
+    "UY",
+    "VE",
+    "VG",
+    "VI",
+  ],
+};
+
+const accountData = async (req, res) => {
+  try {
+    const {
+      length,
+      start,
+      companySize,
+      geo,
+      industry,
+      jobFunction,
+      intentSignals,
+      searchByCompanyAndWebsite,
+    } = req.body || {};
+
+    const pipeline = [];
+
+    if (companySize.length > 0) {
+      pipeline.push({
+        $match: {
+          company_size: {
+            $in: companySize.map((title) => new RegExp(title, "i")),
+          },
+        },
+      });
+    }
+
+    if (industry.length > 0) {
+      pipeline.push({
+        $match: {
+          industries: {
+            $in: industry.map((title) => new RegExp(title, "i")),
+          },
+        },
+      });
+    }
+
+    if (geo.length > 0) {
+      const regionFilter = geo.map((c) => ({
+        country_code: { $in: regions[c] || [] },
+      }));
+      pipeline.push({
+        $match: { $or: regionFilter },
+      });
+    }
+
+    if (searchByCompanyAndWebsite) {
+      const companyWebsiteMatch = {
+        $or: [
+          { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
+          {
+            companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") },
+          },
+        ],
+      };
+      pipeline.push({ $match: companyWebsiteMatch });
+    }
+
+    pipeline.push({ $skip: start });
+    pipeline.push({ $limit: length });
+
+    const data = await Local.aggregate(pipeline);
+
+    const countPipeline = pipeline.slice(0, -2); // Remove skip and limit stages
+    const count = await Local.aggregate([
+      ...countPipeline,
+      { $count: "count" },
+    ]);
+    const totalRecords = count.length > 0 ? count[0].count : 0;
+
+    const totalPage = Math.ceil(totalRecords / length);
+    const filteredPages = Math.ceil(data.length / length);
+
+    const result = {
+      recordsTotal: totalRecords,
+      recordsFiltered: data.length,
+      totalPages: totalPage,
+      currentPage: filteredPages,
+      recordsPerPage: length,
+      data: data,
+    };
+
+    // res.status(200).json({
+    //   totalRecords,
+    //   totalPages,
+    //   filteredRecords: data.length,
+    //   filteredPages,
+    //   data,
+    // });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json("Internal Server Error");
+  }
+};
+
 const crmData = asyncHandler(async (req, res) => {
   try {
     const {
@@ -866,5 +1236,7 @@ module.exports = {
   chartForCompanySize,
   chartForRegion,
   crmData,
+  chartForIndustry,
   totalFilterRecords,
+  accountData,
 };
