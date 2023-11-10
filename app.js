@@ -5,16 +5,7 @@ const cors = require("cors");
 const crmRoutes = require("./src/route/data");
 const employeeRoutes = require("./src/route/employee");
 const connectDb = require("./src/config/config");
-// const roleRoutes = require('./src/routes/roleRoutes');
-// const userRoutes = require('./src/routes/userRoutes');
-// const logger = require('./src/middlewares/winstonLogger');
-// const authRoutes = require('./src/routes/authRoutes');
-// const restaurantRoutes = require('./src/routes/restaurantRoutes');
-// const categoryRoutes = require('./src/routes/categoryRoute');
-// const productRoutes = require('./src/routes/productRoutes');
-// const orderRoutes = require('./src/routes/orderRoutes');
-// const campusRoutes  = require('./src/routes/campusRoutes');
-// const cartRoutes = require('./src/routes/cartRoutes');
+const userRoutes = require("./src/route/user");
 
 const dataRoutes = require("./src/route/data");
 
@@ -32,6 +23,7 @@ app.use(express.static("public"));
 
 app.use("/data", crmRoutes);
 app.use("/data", employeeRoutes);
+app.use("/data", userRoutes);
 // app.use(helmet());
 // app.use((req,res,next) =>{
 //   logger.info(`${req.method} ${req.url} ${req.ip} ${req.hostname} ${new Date()} ${req.get('User-Agent')}`);
