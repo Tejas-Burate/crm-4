@@ -910,7 +910,7 @@ const chartForIndustries = async (req, res) => {
           result[industryCategory] = 0;
         }
         result[industryCategory] += count;
-        result.total += count;
+        // result.total += count;
       }
     });
 
