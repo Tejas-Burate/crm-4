@@ -373,7 +373,7 @@ const chartForCompanySize = asyncHandler(async (req, res) => {
 
     companySizeCounts.forEach(({ company_size, count }) => {
       result[company_size] = count;
-      result.total += count;
+      // result.total += count;
     });
 
     res.status(200).json(result);
@@ -890,7 +890,7 @@ const regions = {
     "VI",
   ],
 };
-
+//Pipeline
 const accountData = async (req, res) => {
   try {
     const {
@@ -935,6 +935,16 @@ const accountData = async (req, res) => {
       });
     }
 
+    // if (jobFunction.length > 0) {
+    //   pipeline.push({
+    //     $match: {
+    //       industries: {
+    //         $in: jobFunction.map((title) => new RegExp(title, "i")),
+    //       },
+    //     },
+    //   });
+    // }
+
     if (searchByCompanyAndWebsite) {
       const companyWebsiteMatch = {
         $or: [
@@ -946,6 +956,9 @@ const accountData = async (req, res) => {
       };
       pipeline.push({ $match: companyWebsiteMatch });
     }
+
+    // const exp = await Local.aggregate(pipeline).explain();
+    // console.log("exp", exp);
 
     pipeline.push({ $skip: start });
     pipeline.push({ $limit: length });
@@ -985,6 +998,78 @@ const accountData = async (req, res) => {
     res.status(500).json("Internal Server Error");
   }
 };
+
+//Filter
+// const accountData = async (req, res) => {
+//   try {
+//     const {
+//       length,
+//       start,
+//       companySize,
+//       geo,
+//       industry,
+//       jobFunction,
+//       intentSignals,
+//       searchByCompanyAndWebsite,
+//     } = req.body;
+
+//     const filter = {};
+
+//     if (Array.isArray(companySize) && companySize.length > 0) {
+//       filter.company_size = {
+//         $in: companySize.map((title) => new RegExp(title, "i")),
+//       };
+//     }
+
+//     if (Array.isArray(industry) && industry.length > 0) {
+//       filter.industries = {
+//         $in: industry.map((title) => new RegExp(title, "i")),
+//       };
+//     }
+
+//     if (Array.isArray(jobFunction) && jobFunction.length > 0) {
+//       filter.jobFunction = {
+//         $in: jobFunction.map((title) => new RegExp(title, "i")),
+//       };
+//     }
+
+//     if (Array.isArray(geo) && geo.length > 0) {
+//       const regionFilter = geo.map((c) => ({
+//         country_code: { $in: regions[c] || [] },
+//       }));
+//       filter.$or = regionFilter;
+//     }
+
+//     if (searchByCompanyAndWebsite) {
+//       filter.$or = [
+//         { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
+//         { companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
+//       ];
+//     }
+
+//     const explanation = await Local.find(filter).explain();
+//     console.log("explanation", explanation);
+//     const data = await Local.find(filter).skip(start).limit(length);
+
+//     const totalRecords = explanation.executionStats.nReturned;
+//     const totalPage = Math.ceil(totalRecords / length);
+//     // const filteredPages = Math.ceil(data.length / length);
+
+//     const result = {
+//       recordsTotal: totalRecords,
+//       recordsFiltered: data.length,
+//       totalPages: totalPage,
+//       currentPage: filteredPages,
+//       recordsPerPage: length,
+//       data: data,
+//     };
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error("error", error);
+//     res.status(500).json("Internal Server Error");
+//   }
+// };
 
 const crmData = asyncHandler(async (req, res) => {
   try {
