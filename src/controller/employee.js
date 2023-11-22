@@ -1487,7 +1487,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     const data = await Employee.find(filter).skip(start).limit(length);
 
-    if (!data) {
+    if (data.length === 0) {
       res
         .status(404)
         .json({ status: 404, error: "404", message: "Data Not Found" });
