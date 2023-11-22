@@ -1481,14 +1481,21 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     // const dataCnt = await Employee.countDocuments(filter);
     // console.log("dataCnt", dataCnt);
+
+    if (Object.keys(filter).length === 0) {
+      res.status(200).json("Please select filters");
+      return;
+    }
+
     const explanation = await Employee.find(filter).explain();
-    console.log("explanation", explanation);
+    // console.log("explanation", explanation);
+    console.log(filter);
 
     const data = await Employee.find(filter).skip(start).limit(length);
 
     // Calculate the total count based on the matching criteria
     const totalRecords = explanation.executionStats.nReturned;
-    console.log("totalRecords", totalRecords);
+    // console.log("totalRecords", totalRecords);
 
     // Calculate the total pages and filtered pages
     const totalPage = Math.ceil(totalRecords / length);
