@@ -1449,11 +1449,17 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       filter.$or = continentFilters;
     }
 
-    if (searchByCountry) {
+    if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
       filter.prospectLocation = {
-        $regex: new RegExp(searchByCountry + "$", "i"),
+        $in: searchByCountry.map((title) => new RegExp(title, "i")),
       };
     }
+
+    // if (searchByCountry) {
+    //   filter.prospectLocation = {
+    //     $regex: new RegExp(searchByCountry + "$", "i"),
+    //   };
+    // }
 
     // Apply search by company and email if specified
     if (searchByCompanyAndEmail) {
