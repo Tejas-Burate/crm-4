@@ -9,12 +9,14 @@ const {
   chartForIndustries,
   filterEmailAndCompanyName,
   accountCount,
+  distinctProst,
 } = require("../controller/employee");
 
 const router = express.Router();
 
 router.get("/getAllCompanyList", getAllCompanyList);
 router.get("/accountCount", accountCount);
+router.post("/distinctProst", distinctProst);
 router.get("/chartForIndustries", chartForIndustries);
 router.post("/employeeFilter", employeeFilter);
 router.post("/searchByJobTitle", searchByJobTitle);

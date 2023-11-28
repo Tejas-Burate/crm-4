@@ -1166,254 +1166,578 @@ const industries = {
 //   }
 // };
 
+//Original
+// const continentsToCountries = {
+//   Africa: [
+//     "Algeria",
+//     "Angola",
+//     "Benin",
+//     "Botswana",
+//     "British Indian Ocean Territory",
+//     "Burkina Faso",
+//     "Burundi",
+//     "Cabo Verde",
+//     "Cameroon",
+//     "Central African Republic",
+//     "Chad",
+//     "Comoros",
+//     "Congo",
+//     "Côte d’Ivoire",
+//     "Democratic Republic of the Congo",
+//     "Djibouti",
+//     "Egypt",
+//     "Equatorial Guinea",
+//     "Eritrea",
+//     "Eswatini",
+//     "Ethiopia",
+//     "French Southern Territories",
+//     "Gabon",
+//     "Gambia",
+//     "Ghana",
+//     "Guinea",
+//     "Guinea-Bissau",
+//     "Kenya",
+//     "Lesotho",
+//     "Liberia",
+//     "Libya",
+//     "Madagascar",
+//     "Malawi",
+//     "Mali",
+//     "Mauritania",
+//     "Mauritius",
+//     "Mayotte",
+//     "Morocco",
+//     "Mozambique",
+//     "Namibia",
+//     "Niger",
+//     "Nigeria",
+//     "Réunion",
+//     "Rwanda",
+//     "Saint Helena",
+//     "Sao Tome and Principe",
+//     "Senegal",
+//     "Seychelles",
+//     "Sierra Leone",
+//     "Somalia",
+//     "South Africa",
+//     "South Sudan",
+//     "Sudan",
+//     "Togo",
+//     "Tunisia",
+//     "Uganda",
+//     "Tanzania",
+//     "Western Sahara",
+//     "Zambia",
+//     "Zimbabwe",
+//   ],
+//   Asia: [
+//     "Afghanistan",
+//     "Armenia",
+//     "Azerbaijan",
+//     "Bahrain",
+//     "Bangladesh",
+//     "Bhutan",
+//     "Brunei Darussalam",
+//     "Cambodia",
+//     "China",
+//     "China, Hong Kong Special Administrative Region",
+//     "China, Macao Special Administrative Region",
+//     "Cyprus",
+//     "Democratic People's Republic of Korea",
+//     "Georgia",
+//     "India",
+//     "Indonesia",
+//     "Iran (Islamic Republic of)",
+//     "Iraq",
+//     "Israel",
+//     "Japan",
+//     "Jordan",
+//     "Kazakhstan",
+//     "Kuwait",
+//     "Kyrgyzstan",
+//     "Lao People's Democratic Republic",
+//     "Lebanon",
+//     "Malaysia",
+//     "Maldives",
+//     "Mongolia",
+//     "Myanmar",
+//     "Nepal",
+//     "Oman",
+//     "Pakistan",
+//     "Philippines",
+//     "Qatar",
+//     "Republic of Korea",
+//     "Saudi Arabia",
+//     "Singapore",
+//     "Sri Lanka",
+//     "State of Palestine",
+//     "Syrian Arab Republic",
+//     "Tajikistan",
+//     "Thailand",
+//     "Timor-Leste",
+//     "Turkey",
+//     "Turkmenistan",
+//     "United Arab Emirates",
+//     "Uzbekistan",
+//     "Viet Nam",
+//     "Yemen",
+//   ],
+//   Europe: [
+//     "Åland Islands",
+//     "Meinerzhagen, North Rhine-westphalia, Germany",
+//     "Albania",
+//     "Andorra",
+//     "Austria",
+//     "Belarus",
+//     "Belgium",
+//     "Bosnia and Herzegovina",
+//     "Bulgaria",
+//     "Croatia",
+//     "Czechia",
+//     "Denmark",
+//     "Estonia",
+//     "Faroe Islands",
+//     "Finland",
+//     "France",
+//     "Germany",
+//     "Gibraltar",
+//     "Greece",
+//     "Guernsey",
+//     "Holy See",
+//     "Hungary",
+//     "Iceland",
+//     "Ireland",
+//     "Isle of Man",
+//     "Italy",
+//     "Jersey",
+//     "Latvia",
+//     "Liechtenstein",
+//     "Lithuania",
+//     "Luxembourg",
+//     "Malta",
+//     "Monaco",
+//     "Montenegro",
+//     "Netherlands",
+//     "North Macedonia",
+//     "Norway",
+//     "Poland",
+//     "Portugal",
+//     "Republic of Moldova",
+//     "Romania",
+//     "Russian Federation",
+//     "San Marino",
+//     "Sark",
+//     "Serbia",
+//     "Slovakia",
+//     "Slovenia",
+//     "Spain",
+//     "Svalbard and Jan Mayen Islands",
+//     "Sweden",
+//     "Switzerland",
+//     "Ukraine",
+//     "United Kingdom",
+//     "United Kingdom of Great Britain and Northern Ireland",
+//   ],
+//   NorthAmerica: [
+//     "Anguilla",
+//     "Antigua and Barbuda",
+//     "Aruba",
+//     "Bahamas",
+//     "Barbados",
+//     "Belize",
+//     "Bermuda",
+//     "Bonaire, Sint Eustatius and Saba",
+//     "British Virgin Islands",
+//     "Canada",
+//     "United States",
+//     "Cayman Islands",
+//     "Costa Rica",
+//     "Cuba",
+//     "Curaçao",
+//     "Dominica",
+//     "Dominican Republic",
+//     "El Salvador",
+//     "Greenland",
+//     "Grenada",
+//     "Guadeloupe",
+//     "Guatemala",
+//     "Haiti",
+//     "Honduras",
+//     "Jamaica",
+//     "Martinique",
+//     "Mexico",
+//     "Montserrat",
+//     "Nicaragua",
+//     "Panama",
+//     "Puerto Rico",
+//     "Saint Barthélemy",
+//     "Saint Kitts and Nevis",
+//     "Saint Lucia",
+//     "San Francisco",
+//     "Saint Martin (French Part)",
+//     "Saint Pierre and Miquelon",
+//     "Saint Vincent and the Grenadines",
+//     "Sint Maarten (Dutch part)",
+//     "Trinidad and Tobago",
+//     "Turks and Caicos Islands",
+//     "United States Virgin Islands",
+//   ],
+//   SouthAmerica: [
+//     "Argentina",
+//     "Bolivia (Plurinational State of)",
+//     "Bouvet Island",
+//     "Brazil",
+//     "Chile",
+//     "Colombia",
+//     "Ecuador",
+//     "Falkland Islands (Malvinas)",
+//     "French Guiana",
+//     "Guyana",
+//     "Paraguay",
+//     "Peru",
+//     "South Georgia and the South Sandwich Islands",
+//     "Suriname",
+//     "Uruguay",
+//     "Venezuela (Bolivarian Republic of)",
+//   ],
+//   Australia: [
+//     "Australia",
+//     "Fiji",
+//     "Kiribati",
+//     "Marshall Islands",
+//     "Micronesia",
+//     "Nauru",
+//     "New Zealand",
+//     "Palau",
+//     "Papua New Guinea",
+//     "Samoa",
+//     "Solomon Islands",
+//     "Tonga",
+//     "Tuvalu",
+//     "Vanuatu",
+//   ],
+// };
+
+// const continentsToCountries = {
+//   Australia: {
+//     Australia: [
+//       "Australian Capital Territory",
+//       "New South Wales",
+//       "Northern Territory",
+//       "Queensland",
+//       "South Australia",
+//       "Tasmania",
+//       "Victoria",
+//       "Western Australia",
+//     ],
+
+//     newZealand: [
+//       "Auckland",
+//       "Wellington",
+//       "Christchurch",
+//       "Hamilton",
+//       "Tauranga",
+//       "Dunedin",
+//       "Palmerston North",
+//       "Napier-Hastings",
+//       "Nelson",
+//       "Rotorua",
+//     ],
+//   },
+
+//   Asia: {
+//     India: ["Pune", "Mumbai", "Bengaluru", "Delhi", "Punjab"],
+//     SriLank: ["colombo"],
+//   },
+// };
+
 const continentsToCountries = {
-  Africa: [
-    "Algeria",
-    "Angola",
-    "Benin",
-    "Botswana",
-    "British Indian Ocean Territory",
-    "Burkina Faso",
-    "Burundi",
-    "Cabo Verde",
-    "Cameroon",
-    "Central African Republic",
-    "Chad",
-    "Comoros",
-    "Congo",
-    "Côte d’Ivoire",
-    "Democratic Republic of the Congo",
-    "Djibouti",
-    "Egypt",
-    "Equatorial Guinea",
-    "Eritrea",
-    "Eswatini",
-    "Ethiopia",
-    "French Southern Territories",
-    "Gabon",
-    "Gambia",
-    "Ghana",
-    "Guinea",
-    "Guinea-Bissau",
-    "Kenya",
-    "Lesotho",
-    "Liberia",
-    "Libya",
-    "Madagascar",
-    "Malawi",
-    "Mali",
-    "Mauritania",
-    "Mauritius",
-    "Mayotte",
-    "Morocco",
-    "Mozambique",
-    "Namibia",
-    "Niger",
-    "Nigeria",
-    "Réunion",
-    "Rwanda",
-    "Saint Helena",
-    "Sao Tome and Principe",
-    "Senegal",
-    "Seychelles",
-    "Sierra Leone",
-    "Somalia",
-    "South Africa",
-    "South Sudan",
-    "Sudan",
-    "Togo",
-    "Tunisia",
-    "Uganda",
-    "Tanzania",
-    "Western Sahara",
-    "Zambia",
-    "Zimbabwe",
-  ],
-  Asia: [
-    "Afghanistan",
-    "Armenia",
-    "Azerbaijan",
-    "Bahrain",
-    "Bangladesh",
-    "Bhutan",
-    "Brunei Darussalam",
-    "Cambodia",
-    "China",
-    "China, Hong Kong Special Administrative Region",
-    "China, Macao Special Administrative Region",
-    "Cyprus",
-    "Democratic People's Republic of Korea",
-    "Georgia",
-    "India",
-    "Indonesia",
-    "Iran (Islamic Republic of)",
-    "Iraq",
-    "Israel",
-    "Japan",
-    "Jordan",
-    "Kazakhstan",
-    "Kuwait",
-    "Kyrgyzstan",
-    "Lao People's Democratic Republic",
-    "Lebanon",
-    "Malaysia",
-    "Maldives",
-    "Mongolia",
-    "Myanmar",
-    "Nepal",
-    "Oman",
-    "Pakistan",
-    "Philippines",
-    "Qatar",
-    "Republic of Korea",
-    "Saudi Arabia",
-    "Singapore",
-    "Sri Lanka",
-    "State of Palestine",
-    "Syrian Arab Republic",
-    "Tajikistan",
-    "Thailand",
-    "Timor-Leste",
-    "Turkey",
-    "Turkmenistan",
-    "United Arab Emirates",
-    "Uzbekistan",
-    "Viet Nam",
-    "Yemen",
-  ],
-  Europe: [
-    "Åland Islands",
-    "Albania",
-    "Andorra",
-    "Austria",
-    "Belarus",
-    "Belgium",
-    "Bosnia and Herzegovina",
-    "Bulgaria",
-    "Croatia",
-    "Czechia",
-    "Denmark",
-    "Estonia",
-    "Faroe Islands",
-    "Finland",
-    "France",
-    "Germany",
-    "Gibraltar",
-    "Greece",
-    "Guernsey",
-    "Holy See",
-    "Hungary",
-    "Iceland",
-    "Ireland",
-    "Isle of Man",
-    "Italy",
-    "Jersey",
-    "Latvia",
-    "Liechtenstein",
-    "Lithuania",
-    "Luxembourg",
-    "Malta",
-    "Monaco",
-    "Montenegro",
-    "Netherlands",
-    "North Macedonia",
-    "Norway",
-    "Poland",
-    "Portugal",
-    "Republic of Moldova",
-    "Romania",
-    "Russian Federation",
-    "San Marino",
-    "Sark",
-    "Serbia",
-    "Slovakia",
-    "Slovenia",
-    "Spain",
-    "Svalbard and Jan Mayen Islands",
-    "Sweden",
-    "Switzerland",
-    "Ukraine",
-    "United Kingdom",
-    "United Kingdom of Great Britain and Northern Ireland",
-  ],
-  NorthAmerica: [
-    "Anguilla",
-    "Antigua and Barbuda",
-    "Aruba",
-    "Bahamas",
-    "Barbados",
-    "Belize",
-    "Bermuda",
-    "Bonaire, Sint Eustatius and Saba",
-    "British Virgin Islands",
-    "Canada",
-    "United States",
-    "Cayman Islands",
-    "Costa Rica",
-    "Cuba",
-    "Curaçao",
-    "Dominica",
-    "Dominican Republic",
-    "El Salvador",
-    "Greenland",
-    "Grenada",
-    "Guadeloupe",
-    "Guatemala",
-    "Haiti",
-    "Honduras",
-    "Jamaica",
-    "Martinique",
-    "Mexico",
-    "Montserrat",
-    "Nicaragua",
-    "Panama",
-    "Puerto Rico",
-    "Saint Barthélemy",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "San Francisco",
-    "Saint Martin (French Part)",
-    "Saint Pierre and Miquelon",
-    "Saint Vincent and the Grenadines",
-    "Sint Maarten (Dutch part)",
-    "Trinidad and Tobago",
-    "Turks and Caicos Islands",
-    "United States Virgin Islands",
-  ],
-  SouthAmerica: [
-    "Argentina",
-    "Bolivia (Plurinational State of)",
-    "Bouvet Island",
-    "Brazil",
-    "Chile",
-    "Colombia",
-    "Ecuador",
-    "Falkland Islands (Malvinas)",
-    "French Guiana",
-    "Guyana",
-    "Paraguay",
-    "Peru",
-    "South Georgia and the South Sandwich Islands",
-    "Suriname",
-    "Uruguay",
-    "Venezuela (Bolivarian Republic of)",
-  ],
-  Australia: [
-    "Australia",
-    "Fiji",
-    "Kiribati",
-    "Marshall Islands",
-    "Micronesia",
-    "Nauru",
-    "New Zealand",
-    "Palau",
-    "Papua New Guinea",
-    "Samoa",
-    "Solomon Islands",
-    "Tonga",
-    "Tuvalu",
-    "Vanuatu",
-  ],
+  Benin: "Benin",
+  BurkinaFaso: "Burkina Faso",
+  Burundi: "Burundi",
+  CapeVerde: "Cape Verde",
+  Cameroon: "Cameroon",
+  CentralAfricanRepublic: "Central African Republic",
+  Chad: "Chad",
+  Comoros: "Comoros",
+  DemocraticRepublicoftheCongo: "Democratic Republic of the Congo",
+  Djibouti: "Djibouti",
+  Egypt: "Egypt",
+  EquatorialGuinea: "Equatorial Guinea",
+  Eritrea: "Eritrea",
+  Eswatini: "Eswatini",
+  Ethiopia: "Ethiopia",
+  Gabon: "Gabon",
+  Gambia: "Gambia",
+  Ghana: "Ghana",
+  Guinea: "Guinea",
+  GuineaBissau: "Guinea Bissau",
+  IvoryCoast: "Ivory Coast",
+  Kenya: "Kenya",
+  Lesotho: "Lesotho",
+  Liberia: "Liberia",
+  Libya: "Libya",
+  Madagascar: "Madagascar",
+  Malawi: "Malawi",
+  Mali: "Mali",
+  Mauritania: "Mauritania",
+  Mauritius: "Mauritius",
+  Mayotte: "Mayotte",
+  Morocco: "Morocco",
+  Mozambique: "Mozambique",
+  Namibia: "Namibia",
+  Niger: "Niger",
+  Nigeria: "Nigeria",
+  Reunion: "Reunion",
+  Rwanda: "Rwanda",
+  SaintHelena: "Saint Helena",
+  SaoTomeandPrincipe: "Sao Tome and Principe",
+  Senegal: "Senegal",
+  Seychelles: "Seychelles",
+  SierraLeone: "Sierra Leone",
+  Somalia: "Somalia",
+  SouthAfrica: "South Africa",
+  SouthSudan: "South Sudan",
+  Sudan: "Sudan",
+  Tanzania: "Tanzania",
+  Togo: "Togo",
+  Tunisia: "Tunisia",
+  Uganda: "Uganda",
+  WesternSahara: "Western Sahara",
+  Zambia: "Zambia",
+  Zimbabwe: "Zimbabwe",
+  Azerbaijan: "Azerbaijan",
+  Bahrain: "Bahrain",
+  Bangladesh: "Bangladesh",
+  Bhutan: "Bhutan",
+  Brunei: "Brunei",
+  Cambodia: "Cambodia",
+  China: "China",
+  Cyprus: "Cyprus",
+  Georgia: "Georgia",
+  HongKong: "Hong Kong",
+  India: "India",
+  Indonesia: "Indonesia",
+  Iran: "Iran",
+  Iraq: "Iraq",
+  Israel: "Israel",
+  Japan: "Japan",
+  Jordan: "Jordan",
+  Kazakhstan: "Kazakhstan",
+  NorthKorea: "North Korea",
+  SouthKorea: "South Korea",
+  Kuwait: "Kuwait",
+  Kyrgyzstan: "Kyrgyzstan",
+  Laos: "Laos",
+  Lebanon: "Lebanon",
+  Macau: "Macau",
+  Malaysia: "Malaysia",
+  Maldives: "Maldives",
+  Mongolia: "Mongolia",
+  Myanmar: "Myanmar",
+  Nepal: "Nepal",
+  Oman: "Oman",
+  Pakistan: "Pakistan",
+  Palestine: "Palestine",
+  Philippines: "Philippines",
+  Qatar: "Qatar",
+  SaudiArabia: "Saudi Arabia",
+  Singapore: "Singapore",
+  SriLanka: "Sri Lanka",
+  Syria: "Syria",
+  Taiwan: "Taiwan",
+  Tajikistan: "Tajikistan",
+  Thailand: "Thailand",
+  TimorLeste: "Timor Leste",
+  Turkey: "Turkey",
+  Turkmenistan: "Turkmenistan",
+  UnitedArabEmirates: "United Arab Emirates",
+  Uzbekistan: "Uzbekistan",
+  Vietnam: "Vietnam",
+  Yemen: "Yemen",
+  AmericanSamoa: "American Samoa",
+  ChristmasIsland: "Christmas Island",
+  CocosIslands: "Cocos Islands",
+  CookIslands: "Cook Islands",
+  Fiji: "Fiji",
+  FrenchPolynesia: "French Polynesia",
+  Guam: "Guam",
+  HeardIslandAndMcDonaldIslands: "Heard Island And McDonald Islands",
+  Kiribati: "Kiribati",
+  MarshallIslands: "Marshall Islands",
+  Micronesia: "Micronesia",
+  Nauru: "Nauru",
+  NewCaledonia: "New Caledonia",
+  NewZealand: "New Zealand",
+  Niue: "Niue",
+  NorfolkIsland: "Norfolk Island",
+  NorthernMarianaIslands: "Northern Mariana Islands",
+  Palau: "Palau",
+  PapuaNewGuinea: "Papua New Guinea",
+  PitcairnIslands: "Pitcairn Islands",
+  Samoa: "Samoa",
+  SolomonIslands: "Solomon Islands",
+  Tokelau: "Tokelau",
+  Tonga: "Tonga",
+  Tuvalu: "Tuvalu",
+  Vanuatu: "Vanuatu",
+  WallisAndFutuna: "Wallis And Futuna",
+  AlandIslands: "Aland Islands",
+  Albania: "Albania",
+  Andorra: "Andorra",
+  Austria: "Austria",
+  Belarus: "Belarus",
+  Belgium: "Belgium",
+  BosniaAndHerzegovina: "Bosnia And Herzegovina",
+  Bulgaria: "Bulgaria",
+  Croatia: "Croatia",
+  CzechRepublic: "Czech Republic",
+  Denmark: "Denmark",
+  Estonia: "Estonia",
+  FaroeIslands: "Faroe Islands",
+  Finland: "Finland",
+  France: "France",
+  Germany: "Germany",
+  Gibraltar: "Gibraltar",
+  Greece: "Greece",
+  Guernsey: "Guernsey",
+  VaticanCity: "Vatican City",
+  Hungary: "Hungary",
+  Iceland: "Iceland",
+  Ireland: "Ireland",
+  IsleOfMan: "Isle Of Man",
+  Italy: "Italy",
+  Jersey: "Jersey",
+  Latvia: "Latvia",
+  Liechtenstein: "Liechtenstein",
+  Lithuania: "Lithuania",
+  Luxembourg: "Luxembourg",
+  Malta: "Malta",
+  Moldova: "Moldova",
+  Monaco: "Monaco",
+  Montenegro: "Montenegro",
+  Netherlands: "Netherlands",
+  NorthMacedonia: "North Macedonia",
+  Norway: "Norway",
+  Poland: "Poland",
+  Portugal: "Portugal",
+  Romania: "Romania",
+  Russia: "Russia",
+  SanMarino: "San Marino",
+  Serbia: "Serbia",
+  Slovakia: "Slovakia",
+  Slovenia: "Slovenia",
+  Spain: "Spain",
+  SvalbardAndJanMayen: "Svalbard And Jan Mayen",
+  Sweden: "Sweden",
+  Switzerland: "Switzerland",
+  Ukraine: "Ukraine",
+  UnitedKingdom: "UK",
+  Belize: "Belize",
+  Bermuda: "Bermuda",
+  Canada: "Canada",
+  CostaRica: "Costa Rica",
+  ElSalvador: "El Salvador",
+  Greenland: "Greenland",
+  Guatemala: "Guatemala",
+  Honduras: "Honduras",
+  Mexico: "Mexico",
+  Nicaragua: "Nicaragua",
+  Panama: "Panama",
+  SaintPierreAndMiquelon: "Saint Pierre And Miquelon",
+  UnitedStates: "United States",
+  Anguilla: "Anguilla",
+  AntiguaAndBarbuda: "Antigua And Barbuda",
+  Argentina: "Argentina",
+  Aruba: "Aruba",
+  Bahamas: "Bahamas",
+  Barbados: "Barbados",
+  Bolivia: "Bolivia",
+  BonaireSintEustatiusAndSaba: "Bonaire Sint Eustatius And Saba",
+  BouvetIsland: "Bouvet Island",
+  Brazil: "Brazil",
+  CaymanIslands: "Cayman Islands",
+  Chile: "Chile",
+  Colombia: "Colombia",
+  Cuba: "Cuba",
+  Curaçao: "Curaçao",
+  Dominica: "Dominica",
+  DominicanRepublic: "Dominican Republic",
+  Ecuador: "Ecuador",
+  FalklandIslands: "Falkland Islands",
+  FrenchGuiana: "French Guiana",
+  Grenada: "Grenada",
+  Guadeloupe: "Guadeloupe",
+  Guam: "Guam",
+  Guyana: "Guyana",
+  Haiti: "Haiti",
+  Jamaica: "Jamaica",
+  Martinique: "Martinique",
+  Montserrat: "Montserrat",
+  Paraguay: "Paraguay",
+  Peru: "Peru",
+  PuertoRico: "Puerto Rico",
+  SaintBarthélemy: "Saint Barthélemy",
+  SaintKittsAndNevis: "Saint Kitts And Nevis",
+  SaintLucia: "Saint Lucia",
+  SaintMartin: "Saint Martin",
+  SaintVincentAndTheGrenadines: "Saint Vincent And The Grenadines",
+  SintMaarten: "Sint Maarten",
+  SouthGeorgiaAndTheSouthSandwichIslands:
+    "South Georgia And The South Sandwich Islands",
+  Suriname: "Suriname",
+  TrinidadAndTobago: "Trinidad And Tobago",
+  TurksAndCaicosIslands: "Turks And Caicos Islands",
+  Uruguay: "Uruguay",
+  Venezuela: "Venezuela",
+  VirginIslands: "Virgin Islands",
+};
+
+const distinctProst = async (req, res) => {
+  try {
+    const {
+      department,
+      jobTitle,
+      start,
+      length,
+      sortField,
+      sortOrder,
+      searchByCompanyAndEmail,
+      search,
+      searchByCountry,
+      continent,
+    } = req.body;
+    // const data = await Employee.find(
+    //   {
+    //     // prospectLocation: { $regex: new RegExp(searchByCountry, "i") },
+    //     // department: { $regex: new RegExp(department, "i") },
+    //     // jobTitle: jobTitle,
+    //     continent: "europe",
+    //   },
+    //   null // Projection: null means return all fields
+    // ).limit(10);
+
+    const data = await Employee.distinct("prospectLocation", {
+      prospectLocation: { $regex: /United Kingdom/i },
+    });
+    const cnt = await Employee.data;
+    console.log("cnt", cnt);
+    if (!data) {
+      res.status(404).json("Data Not found");
+      return;
+    }
+
+    if (data.length === 0) {
+      res.status(404).json("Data Not found");
+      return;
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("error", error);
+
+    res.status(500).json("Internal Server Error");
+  }
 };
 
 //Fiter
@@ -1441,24 +1765,29 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       };
     }
 
-    // Apply filter for 'continent' using continentsToCountries
-    if (continent && continent.length > 0) {
-      const continentFilters = continent.map((c) => ({
-        prospectLocation: { $in: continentsToCountries[c] || [] },
-      }));
-      filter.$or = continentFilters;
-    }
-
     if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
-      filter.prospectLocation = {
-        $in: searchByCountry.map((title) => new RegExp(title, "i")),
-      };
+      const countriesToSearch = searchByCountry
+        .map((countryKey) => continentsToCountries[countryKey])
+        .filter(Boolean);
+
+      console.log("countriesToSearch", countriesToSearch);
+      if (countriesToSearch.length > 0) {
+        // Use $in for exact match without regular expressions
+        filter.country = { $in: countriesToSearch };
+      }
     }
 
-    // if (searchByCountry) {
-    //   filter.prospectLocation = {
-    //     $regex: new RegExp(searchByCountry + "$", "i"),
-    //   };
+    // if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
+    //   const countriesToSearch = searchByCountry
+    //     .map((countryKey) => continentsToCountries[countryKey])
+    //     .filter(Boolean);
+
+    //   console.log("countriesToSearch", countriesToSearch);
+    //   if (countriesToSearch.length > 0) {
+    //     filter.country = {
+    //       $in: countriesToSearch.map((country) => new RegExp(country, "i")),
+    //     };
+    //   }
     // }
 
     // Apply search by company and email if specified
@@ -1488,8 +1817,10 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       return;
     }
 
-    const explanation = await Employee.find(filter).explain();
-    console.log("explanation", explanation);
+    // const explanation = await Employee.find(filter).explain();
+    // console.log("explanation", explanation);
+    const count = await Employee.countDocuments(filter);
+    console.log("count", count);
 
     const data = await Employee.find(filter).skip(start).limit(length);
 
@@ -1501,14 +1832,18 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     }
 
     // Calculate the total count based on the matching criteria
-    const totalRecords = explanation.executionStats.nReturned;
+    // const totalRecords = explanation.executionStats.nReturned;
+    const totalRecords = count;
 
     // Calculate the total pages and filtered pages
     const totalPage = Math.ceil(totalRecords / length);
 
     // Get matched continent and associated countries
-    const matchedContinent = continent[0] || null;
-    const matchedCountries = continentsToCountries[matchedContinent] || [];
+    const matchedContinent =
+      continent && continent.length > 0 ? continent[0] : null;
+    const matchedCountries = matchedContinent
+      ? continentsToCountries[matchedContinent] || []
+      : [];
 
     res.status(200).json({
       totalRecords,
@@ -1527,6 +1862,133 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     });
   }
 };
+
+// const searchByDepartmentAndJobTitle = async (req, res) => {
+//   try {
+//     const {
+//       department,
+//       jobTitle,
+//       start,
+//       length,
+//       searchByCompanyAndEmail,
+//       search,
+//       searchByCountry,
+//       continent,
+//     } = req.body;
+
+//     // Combine filter conditions
+//     const filter = {};
+//     if (Array.isArray(jobTitle) && jobTitle.length > 0) {
+//       filter.jobTitle = {
+//         $in: jobTitle.map((title) => new RegExp(title, "i")),
+//       };
+//     }
+
+//     if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
+//       const countriesToSearch = searchByCountry
+//         .map((countryKey) => continentsToCountries[countryKey])
+//         .filter(Boolean);
+
+//       if (countriesToSearch.length > 0) {
+//         filter.country = {
+//           $in: countriesToSearch.map((country) => new RegExp(country, "i")),
+//         };
+//       }
+//     }
+
+//     if (searchByCompanyAndEmail) {
+//       filter.$or = [
+//         { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
+//       ];
+//     }
+
+//     if (search) {
+//       filter.fullName = { $regex: new RegExp(search, "i") };
+//     }
+
+//     if (Array.isArray(department) && department.length > 0) {
+//       filter.department = {
+//         $in: department.map((dept) => new RegExp(dept, "i")),
+//       };
+//     }
+
+//     // Use $facet to get total records count and limited data in a single query
+//     const result = await Employee.aggregate([
+//       { $match: filter },
+//       {
+//         $facet: {
+//           totalCount: [
+//             {
+//               $count: "count",
+//             },
+//           ],
+//           data: [{ $skip: start }, { $limit: length }],
+//         },
+//       },
+//       {
+//         $project: {
+//           totalRecords: { $arrayElemAt: ["$totalCount.count", 0] },
+//           totalPage: {
+//             $ceil: {
+//               $divide: [
+//                 { $arrayElemAt: ["$totalCount.count", 0] }, // Extract the numeric value
+//                 length,
+//               ],
+//             },
+//           },
+
+//           data: {
+//             $map: {
+//               input: "$data",
+//               as: "employee",
+//               in: {
+//                 fullName: "$$employee.fullName",
+//                 department: "$$employee.department",
+//                 country: "$$employee.country",
+//                 // Add other fields as needed
+//               },
+//             },
+//           },
+//         },
+//       },
+//     ]);
+
+//     const totalRecords = result[0].totalRecords;
+//     const totalPage = result[0].totalPage;
+//     const data = result[0].data;
+
+//     if (data.length === 0) {
+//       res.status(404).json({
+//         status: 404,
+//         error: "404",
+//         message: "Data Not Found",
+//       });
+//       return;
+//     }
+
+//     const matchedContinent =
+//       continent && continent.length > 0 ? continent[0] : null;
+//     const matchedCountries = matchedContinent
+//       ? continentsToCountries[matchedContinent] || []
+//       : [];
+
+//     res.status(200).json({
+//       totalRecords,
+//       totalPage,
+//       filteredRecords: data.length,
+//       data,
+//       matchedContinent,
+//       matchedCountries,
+//     });
+//   } catch (error) {
+//     console.error("error", error);
+//     res.status(500).json({
+//       status: 500,
+//       error: "500",
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
 
 const accountCount = async (req, res) => {
   try {
@@ -1585,6 +2047,7 @@ const filterEmailAndCompanyName = async (req, res) => {
 module.exports = {
   getAllCompanyList,
   accountCount,
+  distinctProst,
   employeeFilter,
   searchByJobTitle,
   searchByDepartment,
