@@ -1452,6 +1452,7 @@ const industries = {
 // };
 
 const continentsToCountries = {
+  Afghanistan: "Afghanistan",
   Benin: "Benin",
   BurkinaFaso: "Burkina Faso",
   Burundi: "Burundi",
@@ -1512,7 +1513,7 @@ const continentsToCountries = {
   Bhutan: "Bhutan",
   Brunei: "Brunei",
   Cambodia: "Cambodia",
-  China: "China",
+  PeoplesRepublicOfChina: "People's Republic Of China",
   Cyprus: "Cyprus",
   Georgia: "Georgia",
   HongKong: "Hong Kong",

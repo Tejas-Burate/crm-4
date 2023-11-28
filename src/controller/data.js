@@ -883,7 +883,8 @@ const accountData = async (req, res) => {
       industry,
       jobFunction,
       intentSignals,
-      searchByCompanyAndWebsite,
+      searchByCompany,
+      searchByWebsite,
     } = req.body;
 
     const pipeline = [];
@@ -930,28 +931,33 @@ const accountData = async (req, res) => {
     //     $match: { $or: regionFilter },
     //   });
     // }
-
-    // if (jobFunction.length > 0) {
-    //   pipeline.push({
-    //     $match: {
-    //       industries: {
-    //         $in: jobFunction.map((title) => new RegExp(title, "i")),
-    //       },
-    //     },
-    //   });
-    // }
-
-    if (searchByCompanyAndWebsite) {
+    if (searchByCompany) {
+      console.log("searchByCompany", searchByCompany);
       const companyWebsiteMatch = {
-        $or: [
-          { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
-          {
-            companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") },
-          },
-        ],
+        name: { $regex: new RegExp(searchByCompany, "i") },
       };
       pipeline.push({ $match: companyWebsiteMatch });
     }
+
+    if (searchByWebsite) {
+      console.log("searchByWebsite", searchByWebsite);
+      const companyWebsiteMatch = {
+        website: { $regex: new RegExp(searchByWebsite, "i") },
+      };
+      pipeline.push({ $match: companyWebsiteMatch });
+    }
+
+    // if (searchByCompanyAndWebsite) {
+    //   const companyWebsiteMatch = {
+    //     $or: [
+    //       { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
+    //       {
+    //         companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") },
+    //       },
+    //     ],
+    //   };
+    //   pipeline.push({ $match: companyWebsiteMatch });
+    // }
 
     // const exp = await Local.aggregate(pipeline).explain();
     // console.log("exp", exp);
