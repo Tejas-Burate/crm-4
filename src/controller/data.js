@@ -922,14 +922,14 @@ const accountData = async (req, res) => {
       }
     }
 
-    if (geo.length > 0) {
-      const regionFilter = geo.map((c) => ({
-        country_code: { $in: regions[c] || [] },
-      }));
-      pipeline.push({
-        $match: { $or: regionFilter },
-      });
-    }
+    // if (geo.length > 0) {
+    //   const regionFilter = geo.map((c) => ({
+    //     country_code: { $in: regions[c] || [] },
+    //   }));
+    //   pipeline.push({
+    //     $match: { $or: regionFilter },
+    //   });
+    // }
 
     // if (jobFunction.length > 0) {
     //   pipeline.push({
