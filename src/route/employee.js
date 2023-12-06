@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get("/getAllCompanyList", getAllCompanyList);
 router.get("/accountCount", accountCount);
-router.post("/distinctProst", distinctProst);
+router.get("/distinctProst", distinctProst);
 router.get("/chartForIndustries", chartForIndustries);
 router.post("/employeeFilter", employeeFilter);
 router.post("/searchByJobTitle", searchByJobTitle);

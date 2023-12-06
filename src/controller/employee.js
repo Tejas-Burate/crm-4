@@ -1167,291 +1167,495 @@ const industries = {
 // };
 
 //Original
-// const continentsToCountries = {
-//   Africa: [
-//     "Algeria",
-//     "Angola",
-//     "Benin",
-//     "Botswana",
-//     "British Indian Ocean Territory",
-//     "Burkina Faso",
-//     "Burundi",
-//     "Cabo Verde",
-//     "Cameroon",
-//     "Central African Republic",
-//     "Chad",
-//     "Comoros",
-//     "Congo",
-//     "Côte d’Ivoire",
-//     "Democratic Republic of the Congo",
-//     "Djibouti",
-//     "Egypt",
-//     "Equatorial Guinea",
-//     "Eritrea",
-//     "Eswatini",
-//     "Ethiopia",
-//     "French Southern Territories",
-//     "Gabon",
-//     "Gambia",
-//     "Ghana",
-//     "Guinea",
-//     "Guinea-Bissau",
-//     "Kenya",
-//     "Lesotho",
-//     "Liberia",
-//     "Libya",
-//     "Madagascar",
-//     "Malawi",
-//     "Mali",
-//     "Mauritania",
-//     "Mauritius",
-//     "Mayotte",
-//     "Morocco",
-//     "Mozambique",
-//     "Namibia",
-//     "Niger",
-//     "Nigeria",
-//     "Réunion",
-//     "Rwanda",
-//     "Saint Helena",
-//     "Sao Tome and Principe",
-//     "Senegal",
-//     "Seychelles",
-//     "Sierra Leone",
-//     "Somalia",
-//     "South Africa",
-//     "South Sudan",
-//     "Sudan",
-//     "Togo",
-//     "Tunisia",
-//     "Uganda",
-//     "Tanzania",
-//     "Western Sahara",
-//     "Zambia",
-//     "Zimbabwe",
-//   ],
-//   Asia: [
-//     "Afghanistan",
-//     "Armenia",
-//     "Azerbaijan",
-//     "Bahrain",
-//     "Bangladesh",
-//     "Bhutan",
-//     "Brunei Darussalam",
-//     "Cambodia",
-//     "China",
-//     "China, Hong Kong Special Administrative Region",
-//     "China, Macao Special Administrative Region",
-//     "Cyprus",
-//     "Democratic People's Republic of Korea",
-//     "Georgia",
-//     "India",
-//     "Indonesia",
-//     "Iran (Islamic Republic of)",
-//     "Iraq",
-//     "Israel",
-//     "Japan",
-//     "Jordan",
-//     "Kazakhstan",
-//     "Kuwait",
-//     "Kyrgyzstan",
-//     "Lao People's Democratic Republic",
-//     "Lebanon",
-//     "Malaysia",
-//     "Maldives",
-//     "Mongolia",
-//     "Myanmar",
-//     "Nepal",
-//     "Oman",
-//     "Pakistan",
-//     "Philippines",
-//     "Qatar",
-//     "Republic of Korea",
-//     "Saudi Arabia",
-//     "Singapore",
-//     "Sri Lanka",
-//     "State of Palestine",
-//     "Syrian Arab Republic",
-//     "Tajikistan",
-//     "Thailand",
-//     "Timor-Leste",
-//     "Turkey",
-//     "Turkmenistan",
-//     "United Arab Emirates",
-//     "Uzbekistan",
-//     "Viet Nam",
-//     "Yemen",
-//   ],
-//   Europe: [
-//     "Åland Islands",
-//     "Meinerzhagen, North Rhine-westphalia, Germany",
-//     "Albania",
-//     "Andorra",
-//     "Austria",
-//     "Belarus",
-//     "Belgium",
-//     "Bosnia and Herzegovina",
-//     "Bulgaria",
-//     "Croatia",
-//     "Czechia",
-//     "Denmark",
-//     "Estonia",
-//     "Faroe Islands",
-//     "Finland",
-//     "France",
-//     "Germany",
-//     "Gibraltar",
-//     "Greece",
-//     "Guernsey",
-//     "Holy See",
-//     "Hungary",
-//     "Iceland",
-//     "Ireland",
-//     "Isle of Man",
-//     "Italy",
-//     "Jersey",
-//     "Latvia",
-//     "Liechtenstein",
-//     "Lithuania",
-//     "Luxembourg",
-//     "Malta",
-//     "Monaco",
-//     "Montenegro",
-//     "Netherlands",
-//     "North Macedonia",
-//     "Norway",
-//     "Poland",
-//     "Portugal",
-//     "Republic of Moldova",
-//     "Romania",
-//     "Russian Federation",
-//     "San Marino",
-//     "Sark",
-//     "Serbia",
-//     "Slovakia",
-//     "Slovenia",
-//     "Spain",
-//     "Svalbard and Jan Mayen Islands",
-//     "Sweden",
-//     "Switzerland",
-//     "Ukraine",
-//     "United Kingdom",
-//     "United Kingdom of Great Britain and Northern Ireland",
-//   ],
-//   NorthAmerica: [
-//     "Anguilla",
-//     "Antigua and Barbuda",
-//     "Aruba",
-//     "Bahamas",
-//     "Barbados",
-//     "Belize",
-//     "Bermuda",
-//     "Bonaire, Sint Eustatius and Saba",
-//     "British Virgin Islands",
-//     "Canada",
-//     "United States",
-//     "Cayman Islands",
-//     "Costa Rica",
-//     "Cuba",
-//     "Curaçao",
-//     "Dominica",
-//     "Dominican Republic",
-//     "El Salvador",
-//     "Greenland",
-//     "Grenada",
-//     "Guadeloupe",
-//     "Guatemala",
-//     "Haiti",
-//     "Honduras",
-//     "Jamaica",
-//     "Martinique",
-//     "Mexico",
-//     "Montserrat",
-//     "Nicaragua",
-//     "Panama",
-//     "Puerto Rico",
-//     "Saint Barthélemy",
-//     "Saint Kitts and Nevis",
-//     "Saint Lucia",
-//     "San Francisco",
-//     "Saint Martin (French Part)",
-//     "Saint Pierre and Miquelon",
-//     "Saint Vincent and the Grenadines",
-//     "Sint Maarten (Dutch part)",
-//     "Trinidad and Tobago",
-//     "Turks and Caicos Islands",
-//     "United States Virgin Islands",
-//   ],
-//   SouthAmerica: [
-//     "Argentina",
-//     "Bolivia (Plurinational State of)",
-//     "Bouvet Island",
-//     "Brazil",
-//     "Chile",
-//     "Colombia",
-//     "Ecuador",
-//     "Falkland Islands (Malvinas)",
-//     "French Guiana",
-//     "Guyana",
-//     "Paraguay",
-//     "Peru",
-//     "South Georgia and the South Sandwich Islands",
-//     "Suriname",
-//     "Uruguay",
-//     "Venezuela (Bolivarian Republic of)",
-//   ],
-//   Australia: [
-//     "Australia",
-//     "Fiji",
-//     "Kiribati",
-//     "Marshall Islands",
-//     "Micronesia",
-//     "Nauru",
-//     "New Zealand",
-//     "Palau",
-//     "Papua New Guinea",
-//     "Samoa",
-//     "Solomon Islands",
-//     "Tonga",
-//     "Tuvalu",
-//     "Vanuatu",
-//   ],
-// };
-
-// const continentsToCountries = {
-//   Australia: {
-//     Australia: [
-//       "Australian Capital Territory",
-//       "New South Wales",
-//       "Northern Territory",
-//       "Queensland",
-//       "South Australia",
-//       "Tasmania",
-//       "Victoria",
-//       "Western Australia",
-//     ],
-
-//     newZealand: [
-//       "Auckland",
-//       "Wellington",
-//       "Christchurch",
-//       "Hamilton",
-//       "Tauranga",
-//       "Dunedin",
-//       "Palmerston North",
-//       "Napier-Hastings",
-//       "Nelson",
-//       "Rotorua",
-//     ],
-//   },
-
-//   Asia: {
-//     India: ["Pune", "Mumbai", "Bengaluru", "Delhi", "Punjab"],
-//     SriLank: ["colombo"],
-//   },
-// };
-
 const continentsToCountries = {
+  Africa: [
+    "Algeria",
+    "Angola",
+    "Benin",
+    "Botswana",
+    "British Indian Ocean Territory",
+    "Burkina Faso",
+    "Burundi",
+    "Cabo Verde",
+    "Cameroon",
+    "Central African Republic",
+    "Chad",
+    "Comoros",
+    "Congo",
+    "Côte d’Ivoire",
+    "Democratic Republic of the Congo",
+    "Djibouti",
+    "Egypt",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Eswatini",
+    "Ethiopia",
+    "French Southern Territories",
+    "Gabon",
+    "Gambia",
+    "Ghana",
+    "Guinea",
+    "Guinea-Bissau",
+    "Kenya",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Madagascar",
+    "Malawi",
+    "Mali",
+    "Mauritania",
+    "Mauritius",
+    "Mayotte",
+    "Morocco",
+    "Mozambique",
+    "Namibia",
+    "Niger",
+    "Nigeria",
+    "Réunion",
+    "Rwanda",
+    "Saint Helena",
+    "Sao Tome and Principe",
+    "Senegal",
+    "Seychelles",
+    "Sierra Leone",
+    "Somalia",
+    "South Africa",
+    "South Sudan",
+    "Sudan",
+    "Togo",
+    "Tunisia",
+    "Uganda",
+    "Tanzania",
+    "Western Sahara",
+    "Zambia",
+    "Zimbabwe",
+  ],
+  Asia: [
+    "Afghanistan",
+    "Armenia",
+    "Azerbaijan",
+    "Bahrain",
+    "Bangladesh",
+    "Bhutan",
+    "Brunei Darussalam",
+    "Cambodia",
+    "China",
+    "China, Hong Kong Special Administrative Region",
+    "China, Macao Special Administrative Region",
+    "Cyprus",
+    "Democratic People's Republic of Korea",
+    "Georgia",
+    "India",
+    "Indonesia",
+    "Iran (Islamic Republic of)",
+    "Iraq",
+    "Israel",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Lao People's Democratic Republic",
+    "Lebanon",
+    "Malaysia",
+    "Maldives",
+    "Mongolia",
+    "Myanmar",
+    "Nepal",
+    "Oman",
+    "Pakistan",
+    "Philippines",
+    "Qatar",
+    "Republic of Korea",
+    "Saudi Arabia",
+    "Singapore",
+    "Sri Lanka",
+    "State of Palestine",
+    "Syrian Arab Republic",
+    "Tajikistan",
+    "Thailand",
+    "Timor-Leste",
+    "Turkey",
+    "Turkmenistan",
+    "United Arab Emirates",
+    "Uzbekistan",
+    "Viet Nam",
+    "Yemen",
+  ],
+  Europe: [
+    "Åland Islands",
+    "Meinerzhagen, North Rhine-westphalia, Germany",
+    "Albania",
+    "Andorra",
+    "Austria",
+    "Belarus",
+    "Belgium",
+    "Bosnia and Herzegovina",
+    "Bulgaria",
+    "Croatia",
+    "Czechia",
+    "Denmark",
+    "Estonia",
+    "Faroe Islands",
+    "Finland",
+    // "France",
+    "Germany",
+    "Gibraltar",
+    "Greece",
+    "Guernsey",
+    "Holy See",
+    "Hungary",
+    "Iceland",
+    "Ireland",
+    "Isle of Man",
+    "Italy",
+    "Jersey",
+    "Latvia",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Monaco",
+    "Montenegro",
+    "Netherlands",
+    "North Macedonia",
+    // "Norway",
+    "Poland",
+    "Portugal",
+    "Republic of Moldova",
+    "Romania",
+    "Russian Federation",
+    "San Marino",
+    "Sark",
+    "Serbia",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Svalbard and Jan Mayen Islands",
+    "Sweden",
+    "Switzerland",
+    "Ukraine",
+    // "United Kingdom",
+    // "United Kingdom of Great Britain and Northern Ireland",
+  ],
+  NorthAmerica: [
+    "Anguilla",
+    "Antigua and Barbuda",
+    "Aruba",
+    "Bahamas",
+    "Barbados",
+    "Belize",
+    "Bermuda",
+    "Bonaire, Sint Eustatius and Saba",
+    "British Virgin Islands",
+    "Canada",
+    "United States",
+    "Cayman Islands",
+    "Costa Rica",
+    "Cuba",
+    "Curaçao",
+    "Dominica",
+    "Dominican Republic",
+    "El Salvador",
+    "Greenland",
+    "Grenada",
+    "Guadeloupe",
+    "Guatemala",
+    "Haiti",
+    "Honduras",
+    "Jamaica",
+    "Martinique",
+    "Mexico",
+    "Montserrat",
+    "Nicaragua",
+    "Panama",
+    "Puerto Rico",
+    "Saint Barthélemy",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "San Francisco",
+    "Saint Martin (French Part)",
+    "Saint Pierre and Miquelon",
+    "Saint Vincent and the Grenadines",
+    "Sint Maarten (Dutch part)",
+    "Trinidad and Tobago",
+    "Turks and Caicos Islands",
+    "United States Virgin Islands",
+  ],
+  SouthAmerica: [
+    // "Argentina",
+    "Bolivia (Plurinational State of)",
+    "Bouvet Island",
+    "Brazil",
+    // "Chile",
+    "Colombia",
+    "Ecuador",
+    "Falkland Islands (Malvinas)",
+    "French Guiana",
+    "Guyana",
+    "Paraguay",
+    "Peru",
+    "South Georgia and the South Sandwich Islands",
+    "Suriname",
+    "Uruguay",
+    "Venezuela (Bolivarian Republic of)",
+  ],
+  Antarctica: [
+    "France",
+    "United Kingdom",
+    "New Zealand",
+    "Norway",
+    "Australia",
+    "Chile",
+    "Argentina",
+  ],
+  Oceania: [
+    "Fiji",
+    "Kiribati",
+    "Marshall Islands",
+    "Micronesia",
+    "Nauru",
+    "Palau",
+    "Papua New Guinea",
+    "Samoa",
+    "Solomon Islands",
+    "Tonga",
+    "Tuvalu",
+    "Vanuatu",
+  ],
+};
+
+const countriesByRegion = {
+  APAC: [
+    "Afghanistan",
+    "Australia",
+    "Bangladesh",
+    "Bhutan",
+    "Burma",
+    "Brunei",
+    "Cambodia",
+    "China (including special administrative regions of Hong Kong and Macau)",
+    "Cook Islands",
+    "Federated States of Micronesia",
+    "Fiji",
+    "India",
+    "Indonesia",
+    "Japan",
+    "Kiribati",
+    "Laos",
+    "Malaysia",
+    "Maldives",
+    "Marshall Islands",
+    "Mongolia",
+    "Nepal",
+    "New Caledonia",
+    "New Zealand",
+    "Niue",
+    "North Korea",
+    "Pakistan",
+    "Palau",
+    "Papua New Guinea",
+    "Philippines",
+    "Singapore",
+    "Solomon Islands",
+    "South Korea",
+    "Sri Lanka",
+    "Taiwan",
+    "Thailand",
+    "Timor-Leste",
+    "Tonga",
+    "Tuvalu",
+    "Vanuatu",
+    "Vietnam",
+  ],
+  Caribbean: [
+    "Anguilla",
+    "Antigua and Barbuda",
+    "Aruba",
+    "Bahamas",
+    "Barbados",
+    "Belize",
+    "Bermuda",
+    "Bonaire, Sint Eustatius, and Saba",
+    "British Virgin Islands",
+    "Cayman Islands",
+    "Cuba",
+    "Curaçao",
+    "Dominica",
+    "Dominican Republic",
+    "Grenada",
+    "Guadeloupe",
+    "Haiti",
+    "Jamaica",
+    "Martinique",
+    "Montserrat",
+    "Puerto Rico",
+    "Saint Barthélemy",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Martin",
+    "Saint Vincent and the Grenadines",
+    "Sint Maarten",
+    "Trinidad and Tobago",
+    "Turks and Caicos Islands",
+    "United States Virgin Islands",
+  ],
+  LatinAmerica: [
+    "Argentina",
+    "Bolivia",
+    "Brazil",
+    "Chile",
+    "Colombia",
+    "Ecuador",
+    "Falkland Islands",
+    "French Guiana",
+    "Guyana",
+    "Paraguay",
+    "Peru",
+    "South Georgia and the South Sandwich Islands",
+    "Suriname",
+    "Uruguay",
+    "Venezuela",
+  ],
+  MiddleEast: [
+    "Bahrain",
+    "Iran",
+    "Iraq",
+    "Israel",
+    "Jordan",
+    "Kuwait",
+    "Lebanon",
+    "Oman",
+    "Palestine",
+    "Qatar",
+    "Saudi Arabia",
+    "Syria",
+    "Turkey",
+    "United Arab Emirates",
+    "Yemen",
+  ],
+  EMEA: [
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Austria",
+    "Bahrain",
+    "Belarus",
+    "Belgium",
+    "Benin",
+    "Bosnia and Herzegovina",
+    "Botswana",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cameroon",
+    "Cape Verde",
+    "Central African Republic",
+    "Chad",
+    "Comoros",
+    "Croatia",
+    "Cyprus",
+    "Czech Republic",
+    "Democratic Republic of the Congo",
+    "Denmark",
+    "Djibouti",
+    "Egypt",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "Faroe Islands",
+    "Finland",
+    "France",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Gibraltar",
+    "Greece",
+    "Guernsey",
+    "Guinea",
+    "Guinea-Bissau",
+    "Hungary",
+    "Iceland",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Isle Of Man",
+    "Israel",
+    "Italy",
+    "Ivory Coast",
+    "Jersey",
+    "Jordan",
+    "Kenya",
+    "Kuwait",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macedonia",
+    "Madagascar",
+    "Malawi",
+    "Mali",
+    "Malta",
+    "Mauritania",
+    "Mauritius",
+    "Moldova",
+    "Monaco",
+    "Montenegro",
+    "Morocco",
+    "Mozambique",
+    "Namibia",
+    "Netherlands",
+    "Niger",
+    "Nigeria",
+    "Norway",
+    "Oman",
+    "Palestine",
+    "Poland",
+    "Portugal",
+    "Qatar",
+    "Romania",
+    "Rwanda",
+    "San Marino",
+    "Sao Tome & Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Slovakia",
+    "Slovenia",
+    "Somalia",
+    "South Africa",
+    "Spain",
+    "Sudan",
+    "Swaziland",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Tanzania",
+    "Togo",
+    "Tunisia",
+    "Turkey",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "Vatican City",
+    "Western Sahara",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe",
+  ],
+};
+
+const countries = {
+  Australia: "Australia",
   Afghanistan: "Afghanistan",
   Benin: "Benin",
   BurkinaFaso: "Burkina Faso",
@@ -1695,54 +1899,166 @@ const continentsToCountries = {
   VirginIslands: "Virgin Islands",
 };
 
-const distinctProst = async (req, res) => {
-  try {
-    const {
-      department,
-      jobTitle,
-      start,
-      length,
-      sortField,
-      sortOrder,
-      searchByCompanyAndEmail,
-      search,
-      searchByCountry,
-      continent,
-    } = req.body;
-    // const data = await Employee.find(
-    //   {
-    //     // prospectLocation: { $regex: new RegExp(searchByCountry, "i") },
-    //     // department: { $regex: new RegExp(department, "i") },
-    //     // jobTitle: jobTitle,
-    //     continent: "europe",
-    //   },
-    //   null // Projection: null means return all fields
-    // ).limit(10);
+//Experimental
+// const searchByDepartmentAndJobTitle = async (req, res) => {
+//   try {
+//     const {
+//       department,
+//       jobTitle,
+//       start,
+//       length,
+//       sortField,
+//       sortOrder,
+//       searchByCompanyAndEmail,
+//       searchByWebsite,
+//       search,
+//       searchByCountry,
+//       continent,
+//       region,
+//     } = req.body;
 
-    const data = await Employee.distinct("prospectLocation", {
-      prospectLocation: { $regex: /United Kingdom/i },
-    });
-    const cnt = await Employee.data;
-    console.log("cnt", cnt);
-    if (!data) {
-      res.status(404).json("Data Not found");
-      return;
-    }
+//     const filter = {};
 
-    if (data.length === 0) {
-      res.status(404).json("Data Not found");
-      return;
-    }
+//     // Apply additional filters for 'jobTitle'
+//     if (Array.isArray(jobTitle) && jobTitle.length > 0) {
+//       filter.jobTitle = {
+//         $in: jobTitle.map((title) => new RegExp(title, "i")),
+//       };
+//     }
 
-    res.status(200).json(data);
-  } catch (error) {
-    console.log("error", error);
+//     if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
+//       const countriesToSearch = searchByCountry
+//         .map((countryKey) => countries[countryKey])
+//         .filter(Boolean);
 
-    res.status(500).json("Internal Server Error");
-  }
-};
+//       if (countriesToSearch.length > 0) {
+//         filter.country = { $in: countriesToSearch };
+//       }
+//     }
 
-//Fiter
+//     if (Array.isArray(continent) && continent.length > 0) {
+//       const continentToSearch = continent
+//         .map((continentKey) => continentsToCountries[continentKey] || [])
+//         .flat()
+//         .filter(Boolean);
+
+//       if (continentToSearch.length > 0) {
+//         filter.country = { $in: continentToSearch };
+//       }
+//     }
+
+//     if (Array.isArray(region) && region.length > 0) {
+//       const regionToSearch = region
+//         .map((regionKey) => countriesByRegion[regionKey] || [])
+//         .flat()
+//         .filter(Boolean);
+
+//       if (regionToSearch.length > 0) {
+//         filter.country = { $in: regionToSearch };
+//       }
+//     }
+
+//     // Apply search by company and email if specified
+//     if (searchByCompanyAndEmail) {
+//       filter.$or = [
+//         ...(filter.$or || []),
+//         { companyName: { $eq: searchByCompanyAndEmail } },
+//       ];
+//     }
+
+//     // Apply search by website if specified
+//     if (searchByWebsite) {
+//       filter.$or = [
+//         ...(filter.$or || []),
+//         { website: { $eq: searchByWebsite } },
+//       ];
+//     }
+
+//     // Apply search if specified
+//     if (search) {
+//       filter.fullName = { $regex: new RegExp(search, "i") };
+//     }
+
+//     // Handle 'department' filter
+//     if (Array.isArray(department) && department.length > 0) {
+//       filter.department = {
+//         $in: department.map((dept) => new RegExp(dept, "i")),
+//       };
+//     }
+
+//     // Sorting
+//     const sort = sortField ? { [sortField]: sortOrder === "asc" ? 1 : -1 } : {};
+
+//     if (Object.keys(filter).length === 0) {
+//       res.status(200).json({ message: "Please select filters" });
+//       return;
+//     }
+
+//     let data;
+//     let totalRecords;
+//     let totalPage;
+
+//     if (searchByCompanyAndEmail) {
+//       const companyData = await Employee.find(filter).limit(length);
+//       const explain = await Employee.find(filter).explain();
+
+//       if (companyData && companyData.length > 0) {
+//         const accountData = await Local.find({
+//           name: { $regex: new RegExp(companyData[0].companyName, "i") },
+//         });
+
+//         const count = await Employee.countDocuments(filter);
+
+//         data = companyData.map((cm) => ({
+//           fullName: cm.fullName,
+//           jobTitle: cm.jobTitle,
+//           company: accountData[0].name,
+//           location: cm.prospectLocation,
+//           company_size: accountData[0].company_size,
+//           industry: accountData[0].industries,
+//         }));
+
+//         totalRecords = count;
+//         totalPage = Math.ceil(totalRecords / length);
+//       }
+//     } else {
+//       const countPromise = Employee.countDocuments(filter);
+//       const dataPromise = Employee.find(filter).skip(start).limit(length);
+
+//       const [count, resultData] = await Promise.all([
+//         countPromise,
+//         dataPromise,
+//       ]);
+
+//       if (resultData.length === 0) {
+//         res
+//           .status(404)
+//           .json({ status: 404, error: "404", message: "Data Not Found" });
+//         return;
+//       }
+
+//       totalRecords = count;
+//       totalPage = Math.ceil(totalRecords / length);
+//       data = resultData;
+//     }
+
+//     res.status(200).json({
+//       totalRecords,
+//       totalPage,
+//       filteredRecords: data.length,
+//       data,
+//     });
+//   } catch (error) {
+//     console.log("error", error);
+//     res.status(500).json({
+//       status: 500,
+//       error: "500",
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
+
+//Working
 const searchByDepartmentAndJobTitle = async (req, res) => {
   try {
     const {
@@ -1753,12 +2069,16 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       sortField,
       sortOrder,
       searchByCompanyAndEmail,
+      company_size,
       search,
+      // searchByJobTitle,
       searchByCountry,
       continent,
+      region,
     } = req.body;
 
     const filter = {};
+    const companyFilter = {};
 
     // Apply additional filters for 'jobTitle'
     if (Array.isArray(jobTitle) && jobTitle.length > 0) {
@@ -1769,7 +2089,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
       const countriesToSearch = searchByCountry
-        .map((countryKey) => continentsToCountries[countryKey])
+        .map((countryKey) => countries[countryKey])
         .filter(Boolean);
 
       console.log("countriesToSearch", countriesToSearch);
@@ -1779,25 +2099,68 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       }
     }
 
-    // if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
-    //   const countriesToSearch = searchByCountry
-    //     .map((countryKey) => continentsToCountries[countryKey])
-    //     .filter(Boolean);
+    if (Array.isArray(continent) && continent.length > 0) {
+      console.log("continent", continent);
+      const continentToSearch = continent
+        .map((continentKey) => continentsToCountries[continentKey] || [])
+        .flat()
+        .filter(Boolean);
 
-    //   console.log("countriesToSearch", countriesToSearch);
-    //   if (countriesToSearch.length > 0) {
-    //     filter.country = {
-    //       $in: countriesToSearch.map((country) => new RegExp(country, "i")),
-    //     };
-    //   }
-    // }
+      console.log("continentToSearch", continentToSearch);
+
+      if (continentToSearch.length > 0) {
+        // Use $in for exact match without regular expressions
+        filter.country = { $in: continentToSearch };
+      }
+    }
+
+    if (Array.isArray(region) && region.length > 0) {
+      console.log("region", region);
+      const regionToSearch = region
+        .map((regionKey) => countriesByRegion[regionKey] || [])
+        .flat()
+        .filter(Boolean);
+
+      console.log("regionToSearch", regionToSearch);
+
+      if (regionToSearch.length > 0) {
+        // Use $in for exact match without regular expressions
+        filter.country = { $in: regionToSearch };
+      }
+    }
 
     // Apply search by company and email if specified
-    if (searchByCompanyAndEmail) {
-      filter.$or = [
-        { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
-      ];
+    // Apply search by company and email if specified
+    if (
+      Array.isArray(searchByCompanyAndEmail) &&
+      searchByCompanyAndEmail.length > 0
+    ) {
+      filter.companyName = {
+        $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+      };
     }
+
+    if (company_size) {
+      // Find documents in Local collection where company_size is in the given array
+      const data = await Local.find({
+        company_size: { $in: company_size },
+      }).limit(500);
+
+      // Extract the company names from the retrieved data
+      const companyNames = data.map((item) => item.name);
+      console.log("companyNames", companyNames);
+
+      // Use the company names in the $in operator for companyName
+      filter.companyName = {
+        $in: companyNames,
+      };
+    }
+
+    // if (searchByCompanyAndEmail) {
+    //   companyFilter.$or = [
+    //     { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
+    //   ];
+    // }
 
     // Apply search if specified
     if (search) {
@@ -1812,12 +2175,66 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     }
 
     // Sorting
-    const sort = sortField ? { [sortField]: sortOrder === "asc" ? 1 : -1 } : {};
+    // const sort = sortField ? { [sortField]: sortOrder === "asc" ? 1 : -1 } : {};
 
     if (Object.keys(filter).length === 0) {
       res.status(200).json({ message: "Please select filters" });
       return;
     }
+
+    if (searchByCompanyAndEmail && company_size) {
+      const companyData = await Employee.find(filter).limit(length);
+      console.log("companyData", companyData);
+      const explain = await Employee.find(filter).explain();
+
+      if (companyData && companyData.length > 0) {
+        const accountData = await Local.find({
+          name: { $regex: new RegExp(companyData[0].companyName, "i") },
+        });
+
+        console.log("accountData", accountData);
+
+        //
+        const count = await Employee.countDocuments(filter);
+        console.log("count", count);
+
+        const data = companyData.map((cm) => ({
+          fullName: cm.fullName,
+          jobTitle: cm.jobTitle,
+          // department: cm.department,
+          company: accountData[0].name,
+          location: cm.prospectLocation,
+          company_size: accountData[0].company_size,
+          industry: accountData[0].industries,
+        }));
+
+        console.log("result", data);
+        console.log("explain", explain);
+        // const data = await Employee.find(filter).skip(start).limit(length);
+
+        // if (data.length === 0) {
+        //   res
+        //     .status(404)
+        //     .json({ status: 404, error: "404", message: "Data Not Found" });
+        //   return;
+        // }
+
+        const totalRecords = count;
+
+        // // Calculate the total pages and filtered pages
+        const totalPage = Math.ceil(totalRecords / length);
+
+        res.status(200).json({
+          totalRecords,
+          totalPage,
+          filteredRecords: data.length,
+          data,
+        });
+        return;
+      }
+    }
+
+    // if(companyFilter)
 
     // const explanation = await Employee.find(filter).explain();
     // console.log("explanation", explanation);
@@ -1841,19 +2258,19 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     const totalPage = Math.ceil(totalRecords / length);
 
     // Get matched continent and associated countries
-    const matchedContinent =
-      continent && continent.length > 0 ? continent[0] : null;
-    const matchedCountries = matchedContinent
-      ? continentsToCountries[matchedContinent] || []
-      : [];
+    // const matchedContinent =
+    //   continent && continent.length > 0 ? continent[0] : null;
+    // const matchedCountries = matchedContinent
+    //   ? continentsToCountries[matchedContinent] || []
+    //   : [];
 
     res.status(200).json({
       totalRecords,
       totalPage,
       filteredRecords: data.length,
       data,
-      matchedContinent,
-      matchedCountries,
+      // matchedContinent,
+      // matchedCountries,
     });
   } catch (error) {
     console.log("error", error);
@@ -1865,132 +2282,56 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
   }
 };
 
-// const searchByDepartmentAndJobTitle = async (req, res) => {
-//   try {
-//     const {
-//       department,
-//       jobTitle,
-//       start,
-//       length,
-//       searchByCompanyAndEmail,
-//       search,
-//       searchByCountry,
-//       continent,
-//     } = req.body;
+const distinctProst = async (req, res) => {
+  try {
+    const {
+      department,
+      start,
+      length,
+      sortField,
+      sortOrder,
+      searchByCompanyAndEmail,
+      search,
+      searchByCountry,
+      continent,
+    } = req.body;
+    // const data = await Employee.find(
+    //   {
+    //     // prospectLocation: { $regex: new RegExp(searchByCountry, "i") },
+    //     // department: { $regex: new RegExp(department, "i") },
+    //     // jobTitle: jobTitle,
+    //     continent: "europe",
+    //   },
+    //   null // Projection: null means return all fields
+    // ).limit(10);
+    // const data = await Employee.aggregate([{ $group: { _id: "$jobTitle" } }]);
+    // const distinctJobTitles = data.map((item) => item._id);
 
-//     // Combine filter conditions
-//     const filter = {};
-//     if (Array.isArray(jobTitle) && jobTitle.length > 0) {
-//       filter.jobTitle = {
-//         $in: jobTitle.map((title) => new RegExp(title, "i")),
-//       };
-//     }
+    const query = {};
+    query.country = "India";
+    // if (industries) query.industries = industries;
 
-//     if (Array.isArray(searchByCountry) && searchByCountry.length > 0) {
-//       const countriesToSearch = searchByCountry
-//         .map((countryKey) => continentsToCountries[countryKey])
-//         .filter(Boolean);
+    const data = await Employee.find({ query }).toArray();
 
-//       if (countriesToSearch.length > 0) {
-//         filter.country = {
-//           $in: countriesToSearch.map((country) => new RegExp(country, "i")),
-//         };
-//       }
-//     }
+    const cnt = await Employee.data;
+    console.log("cnt", cnt);
+    if (!data) {
+      res.status(404).json("Data Not found");
+      return;
+    }
 
-//     if (searchByCompanyAndEmail) {
-//       filter.$or = [
-//         { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
-//       ];
-//     }
+    if (data.length === 0) {
+      res.status(404).json("Data Not found");
+      return;
+    }
 
-//     if (search) {
-//       filter.fullName = { $regex: new RegExp(search, "i") };
-//     }
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("error", error);
 
-//     if (Array.isArray(department) && department.length > 0) {
-//       filter.department = {
-//         $in: department.map((dept) => new RegExp(dept, "i")),
-//       };
-//     }
-
-//     // Use $facet to get total records count and limited data in a single query
-//     const result = await Employee.aggregate([
-//       { $match: filter },
-//       {
-//         $facet: {
-//           totalCount: [
-//             {
-//               $count: "count",
-//             },
-//           ],
-//           data: [{ $skip: start }, { $limit: length }],
-//         },
-//       },
-//       {
-//         $project: {
-//           totalRecords: { $arrayElemAt: ["$totalCount.count", 0] },
-//           totalPage: {
-//             $ceil: {
-//               $divide: [
-//                 { $arrayElemAt: ["$totalCount.count", 0] }, // Extract the numeric value
-//                 length,
-//               ],
-//             },
-//           },
-
-//           data: {
-//             $map: {
-//               input: "$data",
-//               as: "employee",
-//               in: {
-//                 fullName: "$$employee.fullName",
-//                 department: "$$employee.department",
-//                 country: "$$employee.country",
-//                 // Add other fields as needed
-//               },
-//             },
-//           },
-//         },
-//       },
-//     ]);
-
-//     const totalRecords = result[0].totalRecords;
-//     const totalPage = result[0].totalPage;
-//     const data = result[0].data;
-
-//     if (data.length === 0) {
-//       res.status(404).json({
-//         status: 404,
-//         error: "404",
-//         message: "Data Not Found",
-//       });
-//       return;
-//     }
-
-//     const matchedContinent =
-//       continent && continent.length > 0 ? continent[0] : null;
-//     const matchedCountries = matchedContinent
-//       ? continentsToCountries[matchedContinent] || []
-//       : [];
-
-//     res.status(200).json({
-//       totalRecords,
-//       totalPage,
-//       filteredRecords: data.length,
-//       data,
-//       matchedContinent,
-//       matchedCountries,
-//     });
-//   } catch (error) {
-//     console.error("error", error);
-//     res.status(500).json({
-//       status: 500,
-//       error: "500",
-//       message: "Internal Server Error",
-//     });
-//   }
-// };
+    res.status(500).json("Internal Server Error");
+  }
+};
 
 const accountCount = async (req, res) => {
   try {

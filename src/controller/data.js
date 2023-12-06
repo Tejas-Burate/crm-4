@@ -871,7 +871,623 @@ const countries = {
   VirginIslands: "VI",
 };
 
+const continents = {
+  Antarctica: ["AQ"],
+  Asia: [
+    "AF",
+    "AZ",
+    "BH",
+    "BD",
+    "BT",
+    "BN",
+    "KH",
+    "CN",
+    "CY",
+    "GE",
+    "HK",
+    "IN",
+    "ID",
+    "IR",
+    "IQ",
+    "IL",
+    "JP",
+    "JO",
+    "KZ",
+    "KP",
+    "KR",
+    "KW",
+    "KG",
+    "LA",
+    "LB",
+    "MO",
+    "MY",
+    "MV",
+    "MN",
+    "MM",
+    "NP",
+    "OM",
+    "PK",
+    "PS",
+    "PH",
+    "QA",
+    "SA",
+    "SG",
+    "LK",
+    "SY",
+    "TW",
+    "TJ",
+    "TH",
+    "TL",
+    "TR",
+    "TM",
+    "AE",
+    "UZ",
+    "VN",
+    "YE",
+  ],
+  Africa: [
+    "BJ",
+    "BF",
+    "BI",
+    "CV",
+    "CM",
+    "CF",
+    "TD",
+    "KM",
+    "CD",
+    "DJ",
+    "EG",
+    "GQ",
+    "ER",
+    "SZ",
+    "ET",
+    "GA",
+    "GM",
+    "GH",
+    "GN",
+    "GW",
+    "CI",
+    "KE",
+    "LS",
+    "LR",
+    "LY",
+    "MG",
+    "MW",
+    "ML",
+    "MR",
+    "MU",
+    "YT",
+    "MA",
+    "MZ",
+    "NA",
+    "NE",
+    "NG",
+    "RE",
+    "RW",
+    "SH",
+    "ST",
+    "SN",
+    "SC",
+    "SL",
+    "SO",
+    "ZA",
+    "SS",
+    "SD",
+    "TZ",
+    "TG",
+    "TN",
+    "UG",
+    "EH",
+    "ZM",
+    "ZW",
+  ],
+  Europe: [
+    "AX",
+    "AL",
+    "AD",
+    "AU",
+    "AT",
+    "BY",
+    "BE",
+    "BA",
+    "BG",
+    "HR",
+    "CZ",
+    "DK",
+    "EE",
+    "FO",
+    "FI",
+    "FR",
+    "DE",
+    "GI",
+    "GR",
+    "GG",
+    "VA",
+    "HU",
+    "IS",
+    "IE",
+    "IM",
+    "IT",
+    "JE",
+    "LV",
+    "LI",
+    "LT",
+    "LU",
+    "MT",
+    "MD",
+    "MC",
+    "ME",
+    "NL",
+    "MK",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RU",
+    "SM",
+    "RS",
+    "SK",
+    "SI",
+    "ES",
+    "SJ",
+    "SE",
+    "CH",
+    "UA",
+    "GB",
+  ],
+  NorthAmerica: [
+    "BZ",
+    "BM",
+    "CA",
+    "CR",
+    "SV",
+    "GL",
+    "GT",
+    "HN",
+    "MX",
+    "NI",
+    "PA",
+    "PM",
+    "US",
+  ],
+  SouthAmerica: [
+    "AI",
+    "AG",
+    "AR",
+    "AW",
+    "BS",
+    "BB",
+    "BO",
+    "BQ",
+    "BV",
+    "BR",
+    "KY",
+    "CL",
+    "CO",
+    "CU",
+    "CW",
+    "DM",
+    "DO",
+    "EC",
+    "FK",
+    "GF",
+    "GD",
+    "GP",
+    "GU",
+    "GY",
+    "HT",
+    "JM",
+    "MQ",
+    "MS",
+    "PY",
+    "PE",
+    "PR",
+    "BL",
+    "KN",
+    "LC",
+    "MF",
+    "VC",
+    "SX",
+    "GS",
+    "SR",
+    "TT",
+    "TC",
+    "UY",
+    "VE",
+    "VI",
+  ],
+  Oceania: [
+    "AS",
+    "CX",
+    "CC",
+    "CK",
+    "FJ",
+    "PF",
+    "GU",
+    "HM",
+    "KI",
+    "MH",
+    "FM",
+    "NR",
+    "NC",
+    "NZ",
+    "NU",
+    "NF",
+    "MP",
+    "PW",
+    "PG",
+    "PN",
+    "WS",
+    "SB",
+    "TK",
+    "TO",
+    "TV",
+    "VU",
+    "WF",
+  ],
+};
+
+const countriesByRegion = {
+  APAC: [
+    "AF",
+    "AU",
+    "BD",
+    "BT",
+    "MM",
+    "BN",
+    "KH",
+    "CN",
+    "HK",
+    "MO",
+    "FJ",
+    "IN",
+    "ID",
+    "JP",
+    "KI",
+    "LA",
+    "MY",
+    "MV",
+    "MH",
+    "MN",
+    "NP",
+    "NC",
+    "NZ",
+    "NU",
+    "KP",
+    "PK",
+    "PW",
+    "PG",
+    "PH",
+    "SG",
+    "SB",
+    "KR",
+    "LK",
+    "TW",
+    "TH",
+    "TL",
+    "TO",
+    "TV",
+    "VU",
+    "VN",
+  ],
+  Caribbean: [
+    "AI",
+    "AG",
+    "AW",
+    "BS",
+    "BB",
+    "BZ",
+    "BM",
+    "BQ",
+    "VG",
+    "KY",
+    "CU",
+    "CW",
+    "DM",
+    "DO",
+    "GD",
+    "GP",
+    "HT",
+    "JM",
+    "MQ",
+    "MS",
+    "PR",
+    "BL",
+    "KN",
+    "LC",
+    "MF",
+    "VC",
+    "SX",
+    "TT",
+    "TC",
+    "VI",
+  ],
+  LatinAmerica: [
+    "AR",
+    "BO",
+    "BR",
+    "CL",
+    "CO",
+    "EC",
+    "FK",
+    "GF",
+    "GY",
+    "PY",
+    "PE",
+    "GS",
+    "SR",
+    "UY",
+    "VE",
+  ],
+  MiddleEast: [
+    "BH",
+    "IR",
+    "IQ",
+    "IL",
+    "JO",
+    "KW",
+    "LB",
+    "OM",
+    "PS",
+    "QA",
+    "SA",
+    "SY",
+    "TR",
+    "AE",
+    "YE",
+  ],
+  EMEA: [
+    "AL",
+    "DZ",
+    "AD",
+    "AO",
+    "AT",
+    "BH",
+    "BY",
+    "BE",
+    "BJ",
+    "BA",
+    "BW",
+    "BG",
+    "BF",
+    "BI",
+    "CM",
+    "CV",
+    "CF",
+    "TD",
+    "KM",
+    "HR",
+    "CY",
+    "CZ",
+    "CD",
+    "DK",
+    "DJ",
+    "EG",
+    "GQ",
+    "ER",
+    "EE",
+    "ET",
+    "FO",
+    "FI",
+    "FR",
+    "GA",
+    "GM",
+    "GE",
+    "DE",
+    "GH",
+    "GI",
+    "GR",
+    "GG",
+    "GN",
+    "GW",
+    "HU",
+    "IS",
+    "IR",
+    "IQ",
+    "IE",
+    "IM",
+    "IL",
+    "IT",
+    "CI",
+    "JE",
+    "JO",
+    "KE",
+    "KW",
+    "LV",
+    "LB",
+    "LS",
+    "LR",
+    "LY",
+    "LI",
+    "LT",
+    "LU",
+    "MK",
+    "MG",
+    "MW",
+    "ML",
+    "MT",
+    "MR",
+    "MU",
+    "MD",
+    "MC",
+    "ME",
+    "MA",
+    "MZ",
+    "NA",
+    "NL",
+    "NE",
+    "NG",
+    "NO",
+    "OM",
+    "PS",
+    "PL",
+    "PT",
+    "QA",
+    "RO",
+    "RW",
+    "SM",
+    "ST",
+    "SA",
+    "SN",
+    "RS",
+    "SK",
+    "SI",
+    "SO",
+    "ZA",
+    "ES",
+    "SD",
+    "SZ",
+    "SE",
+    "CH",
+    "SY",
+    "TZ",
+    "TG",
+    "TN",
+    "TR",
+    "UG",
+    "UA",
+    "AE",
+    "GB",
+    "VA",
+    "EH",
+    "YE",
+    "ZM",
+    "ZW",
+  ],
+};
+
 //Pipeline
+// const accountData = async (req, res) => {
+//   try {
+//     const {
+//       length,
+//       start,
+//       companySize,
+//       searchByCountry,
+//       geo,
+//       industry,
+//       jobFunction,
+//       intentSignals,
+//       searchByCompany,
+//       searchByWebsite,
+//     } = req.body;
+
+//     const pipeline = [];
+
+//     if (companySize.length > 0) {
+//       pipeline.push({
+//         $match: {
+//           company_size: {
+//             $in: companySize.map((title) => new RegExp(title, "i")),
+//           },
+//         },
+//       });
+//     }
+
+//     if (industry.length > 0) {
+//       pipeline.push({
+//         $match: {
+//           industries: {
+//             $in: industry.map((title) => new RegExp(title, "i")),
+//           },
+//         },
+//       });
+//     }
+
+//     if (searchByCountry.length > 0) {
+//       const countryCodes = searchByCountry.map((c) => countries[c] || []);
+//       const flattenedCountryCodes = countryCodes.reduce(
+//         (acc, val) => acc.concat(val),
+//         []
+//       );
+
+//       if (flattenedCountryCodes.length > 0) {
+//         pipeline.push({
+//           $match: { country_code: { $in: flattenedCountryCodes } },
+//         });
+//       }
+//     }
+
+//     // if (geo.length > 0) {
+//     //   const regionFilter = geo.map((c) => ({
+//     //     country_code: { $in: regions[c] || [] },
+//     //   }));
+//     //   pipeline.push({
+//     //     $match: { $or: regionFilter },
+//     //   });
+//     // }
+//     // if (searchByCompany) {
+//     //   console.log("searchByCompany", searchByCompany);
+//     //   const companyWebsiteMatch = {
+//     //     name: { $regex: new RegExp(searchByCompany, "i") },
+//     //   };
+//     //   pipeline.push({ $match: companyWebsiteMatch });
+//     // }
+
+//     if (searchByWebsite.length > 0) {
+//       pipeline.push({
+//         $match: {
+//           website: {
+//             $in: searchByWebsite.map((title) => new RegExp(title, "i")),
+//           },
+//         },
+//       });
+//     }
+
+//     // if (searchByCompanyAndWebsite) {
+//     //   const companyWebsiteMatch = {
+//     //     $or: [
+//     //       { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
+//     //       {
+//     //         companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") },
+//     //       },
+//     //     ],
+//     //   };
+//     //   pipeline.push({ $match: companyWebsiteMatch });
+//     // }
+
+//     // const exp = await Local.aggregate(pipeline).explain();
+//     // console.log("exp", exp);
+
+//     pipeline.push({ $skip: start });
+//     pipeline.push({ $limit: length });
+
+//     const data = await Local.aggregate(pipeline);
+
+//     const countPipeline = pipeline.slice(0, -2); // Remove skip and limit stages
+//     const count = await Local.aggregate([
+//       ...countPipeline,
+//       { $count: "count" },
+//     ]);
+//     const totalRecords = count.length > 0 ? count[0].count : 0;
+
+//     const totalPage = Math.ceil(totalRecords / length);
+//     const filteredPages = Math.ceil(data.length / length);
+
+//     const result = {
+//       recordsTotal: totalRecords,
+//       recordsFiltered: data.length,
+//       totalPages: totalPage,
+//       currentPage: filteredPages,
+//       recordsPerPage: length,
+//       data: data,
+//     };
+
+//     // res.status(200).json({
+//     //   totalRecords,
+//     //   totalPages,
+//     //   filteredRecords: data.length,
+//     //   filteredPages,
+//     //   data,
+//     // });
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.log("error", error);
+//     res.status(500).json("Internal Server Error");
+//   }
+// };
+
 const accountData = async (req, res) => {
   try {
     const {
@@ -879,34 +1495,33 @@ const accountData = async (req, res) => {
       start,
       companySize,
       searchByCountry,
-      geo,
+      searchByIndustry,
+      continent,
+      region,
       industry,
       jobFunction,
       intentSignals,
-      searchByCompany,
-      searchByWebsite,
+      searchByCompanyAndWebsite,
     } = req.body;
 
-    const pipeline = [];
+    const filter = {};
 
     if (companySize.length > 0) {
-      pipeline.push({
-        $match: {
-          company_size: {
-            $in: companySize.map((title) => new RegExp(title, "i")),
-          },
-        },
-      });
+      filter.company_size = {
+        $in: companySize.map((title) => new RegExp(title, "i")),
+      };
     }
 
     if (industry.length > 0) {
-      pipeline.push({
-        $match: {
-          industries: {
-            $in: industry.map((title) => new RegExp(title, "i")),
-          },
-        },
-      });
+      filter.industries = {
+        $in: industry.map((title) => new RegExp(title, "i")),
+      };
+    }
+
+    if (searchByIndustry) {
+      filter.industries = {
+        $in: industry.map((title) => new RegExp(title, "i")),
+      };
     }
 
     if (searchByCountry.length > 0) {
@@ -917,62 +1532,35 @@ const accountData = async (req, res) => {
       );
 
       if (flattenedCountryCodes.length > 0) {
-        pipeline.push({
-          $match: { country_code: { $in: flattenedCountryCodes } },
-        });
+        filter.country_code = { $in: flattenedCountryCodes };
       }
     }
 
-    // if (geo.length > 0) {
-    //   const regionFilter = geo.map((c) => ({
-    //     country_code: { $in: regions[c] || [] },
-    //   }));
-    //   pipeline.push({
-    //     $match: { $or: regionFilter },
-    //   });
-    // }
-    if (searchByCompany) {
-      console.log("searchByCompany", searchByCompany);
-      const companyWebsiteMatch = {
-        name: { $regex: new RegExp(searchByCompany, "i") },
+    if (region.length > 0) {
+      filter.country_code = {
+        $in: region.map((c) => countriesByRegion[c] || []).flat(),
       };
-      pipeline.push({ $match: companyWebsiteMatch });
     }
 
-    if (searchByWebsite) {
-      console.log("searchByWebsite", searchByWebsite);
-      const companyWebsiteMatch = {
-        website: { $regex: new RegExp(searchByWebsite, "i") },
+    if (continent.length > 0) {
+      filter.country_code = {
+        $in: continent.map((c) => continents[c] || []).flat(),
       };
-      pipeline.push({ $match: companyWebsiteMatch });
     }
 
-    // if (searchByCompanyAndWebsite) {
-    //   const companyWebsiteMatch = {
-    //     $or: [
-    //       { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
-    //       {
-    //         companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") },
-    //       },
-    //     ],
-    //   };
-    //   pipeline.push({ $match: companyWebsiteMatch });
-    // }
+    if (searchByCompanyAndWebsite.length > 0) {
+      filter.websit = {
+        $in: searchByCompanyAndWebsite.map((title) => new RegExp(title, "i")),
+      };
+    }
 
-    // const exp = await Local.aggregate(pipeline).explain();
-    // console.log("exp", exp);
+    console.log("Filter", filter);
 
-    pipeline.push({ $skip: start });
-    pipeline.push({ $limit: length });
+    const data = await Local.find(filter).skip(start).limit(length);
+    console.log("data", data);
 
-    const data = await Local.aggregate(pipeline);
-
-    const countPipeline = pipeline.slice(0, -2); // Remove skip and limit stages
-    const count = await Local.aggregate([
-      ...countPipeline,
-      { $count: "count" },
-    ]);
-    const totalRecords = count.length > 0 ? count[0].count : 0;
+    const count = await Local.countDocuments(filter);
+    const totalRecords = count;
 
     const totalPage = Math.ceil(totalRecords / length);
     const filteredPages = Math.ceil(data.length / length);
@@ -985,14 +1573,6 @@ const accountData = async (req, res) => {
       recordsPerPage: length,
       data: data,
     };
-
-    // res.status(200).json({
-    //   totalRecords,
-    //   totalPages,
-    //   filteredRecords: data.length,
-    //   filteredPages,
-    //   data,
-    // });
 
     res.status(200).json(result);
   } catch (error) {
@@ -1055,7 +1635,7 @@ const accountData = async (req, res) => {
 
 //     const totalRecords = explanation.executionStats.nReturned;
 //     const totalPage = Math.ceil(totalRecords / length);
-//     // const filteredPages = Math.ceil(data.length / length);
+//     const filteredPages = Math.ceil(data.length / length);
 
 //     const result = {
 //       recordsTotal: totalRecords,
