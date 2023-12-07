@@ -1518,9 +1518,9 @@ const accountData = async (req, res) => {
       };
     }
 
-    if (searchByIndustry) {
+    if (searchByIndustry.length > 0) {
       filter.industries = {
-        $in: industry.map((title) => new RegExp(title, "i")),
+        $in: searchByIndustry.map((title) => new RegExp(title, "i")),
       };
     }
 
@@ -1549,10 +1549,32 @@ const accountData = async (req, res) => {
     }
 
     if (searchByCompanyAndWebsite.length > 0) {
-      filter.websit = {
-        $in: searchByCompanyAndWebsite.map((title) => new RegExp(title, "i")),
-      };
+      filter.$or = [
+        {
+          website: {
+            $in: searchByCompanyAndWebsite.map(
+              (title) => new RegExp(title, "i")
+            ),
+          },
+        },
+        {
+          name: {
+            $in: searchByCompanyAndWebsite.map(
+              (title) => new RegExp(title, "i")
+            ),
+          },
+        },
+      ];
     }
+
+    // if (searchByCompanyAndWebsite.length > 0) {
+    //   filter.$or = searchByCompanyAndWebsite.map((title) => ({
+    //     $or: [
+    //       { website: { $regex: new RegExp(title, "i") } },
+    //       { name: { $regex: new RegExp(title, "i") } },
+    //     ],
+    //   }));
+    // }
 
     console.log("Filter", filter);
 

@@ -2072,6 +2072,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       company_size,
       search,
       // searchByJobTitle,
+      seniority,
       searchByCountry,
       continent,
       region,
@@ -2131,24 +2132,43 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     // Apply search by company and email if specified
     // Apply search by company and email if specified
+    // if (
+    //   Array.isArray(searchByCompanyAndEmail) &&
+    //   searchByCompanyAndEmail.length > 0
+    // ) {
+    //   filter.companyName = {
+    //     $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+    //   };
+    // }
+
     if (
       Array.isArray(searchByCompanyAndEmail) &&
       searchByCompanyAndEmail.length > 0
     ) {
-      filter.companyName = {
-        $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
-      };
+      filter.$or = [
+        {
+          companyName: {
+            $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+          },
+        },
+        {
+          websit: {
+            $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+          },
+        },
+      ];
     }
 
-    if (company_size) {
+    if (Array.isArray(company_size) && company_size.length > 0) {
       // Find documents in Local collection where company_size is in the given array
       const data = await Local.find({
         company_size: { $in: company_size },
-      }).limit(500);
+      }).limit(10);
+
+      console.log("company_size data", data);
 
       // Extract the company names from the retrieved data
       const companyNames = data.map((item) => item.name);
-      console.log("companyNames", companyNames);
 
       // Use the company names in the $in operator for companyName
       filter.companyName = {
@@ -2174,6 +2194,12 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       };
     }
 
+    if (Array.isArray(seniority) && seniority.length > 0) {
+      filter.jobTitle = {
+        $in: seniority.map((dept) => new RegExp(dept, "i")),
+      };
+    }
+
     // Sorting
     // const sort = sortField ? { [sortField]: sortOrder === "asc" ? 1 : -1 } : {};
 
@@ -2181,47 +2207,45 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       res.status(200).json({ message: "Please select filters" });
       return;
     }
+    console.log("Filter", filter);
 
-    if (searchByCompanyAndEmail && company_size) {
-      const companyData = await Employee.find(filter).limit(length);
+    if (searchByCompanyAndEmail.length > 0 || company_size.length > 0) {
+      const companyData = await Employee.find(filter).limit(length).skip(start);
       console.log("companyData", companyData);
-      const explain = await Employee.find(filter).explain();
 
       if (companyData && companyData.length > 0) {
+        const companyNames = companyData.map((cm) => cm.companyName);
+
+        console.log("Satge 2", companyNames);
+
+        // Using $regex for case-insensitive exact match
         const accountData = await Local.find({
-          name: { $regex: new RegExp(companyData[0].companyName, "i") },
+          name: {
+            $in: companyNames.map((name) => new RegExp(`^${name}$`, "i")),
+          },
         });
 
         console.log("accountData", accountData);
 
-        //
         const count = await Employee.countDocuments(filter);
         console.log("count", count);
 
-        const data = companyData.map((cm) => ({
-          fullName: cm.fullName,
-          jobTitle: cm.jobTitle,
-          // department: cm.department,
-          company: accountData[0].name,
-          location: cm.prospectLocation,
-          company_size: accountData[0].company_size,
-          industry: accountData[0].industries,
-        }));
+        const data = companyData.map((cm) => {
+          const matchingAccount = accountData.find(
+            (ad) => ad.name.toLowerCase() === cm.companyName.toLowerCase()
+          );
 
-        console.log("result", data);
-        console.log("explain", explain);
-        // const data = await Employee.find(filter).skip(start).limit(length);
-
-        // if (data.length === 0) {
-        //   res
-        //     .status(404)
-        //     .json({ status: 404, error: "404", message: "Data Not Found" });
-        //   return;
-        // }
+          return {
+            fullName: cm.fullName,
+            jobTitle: cm.jobTitle,
+            company: matchingAccount?.name || null,
+            location: cm.prospectLocation,
+            company_size: matchingAccount?.company_size || null,
+            industry: matchingAccount?.industries || null,
+          };
+        });
 
         const totalRecords = count;
-
-        // // Calculate the total pages and filtered pages
         const totalPage = Math.ceil(totalRecords / length);
 
         res.status(200).json({
@@ -2233,6 +2257,59 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
         return;
       }
     }
+
+    // if (searchByCompanyAndEmail || company_size) {
+    //   const companyData = await Employee.find(filter).limit(length);
+    //   console.log("companyData", companyData);
+    //   // const explain = await Employee.find(filter).explain();
+
+    //   if (companyData && companyData.length > 0) {
+    //     console.log("Satge 2", companyData[0].companyName);
+    //     const accountData = await Local.find({
+    //       name: { $regex: new RegExp(companyData[0].companyName, "i") },
+    //     });
+
+    //     console.log("accountData", accountData);
+
+    //     //
+    //     const count = await Employee.countDocuments(filter);
+    //     console.log("count", count);
+
+    //     const data = companyData.map((cm) => ({
+    //       fullName: cm.fullName,
+    //       jobTitle: cm.jobTitle,
+    //       // department: cm.department,
+    //       company: accountData[0].name,
+    //       location: cm.prospectLocation,
+    //       company_size: accountData[0].company_size,
+    //       industry: accountData[0].industries,
+    //     }));
+
+    //     // console.log("result", data);
+    //     // console.log("explain", explain);
+    //     // const data = await Employee.find(filter).skip(start).limit(length);
+
+    //     // if (data.length === 0) {
+    //     //   res
+    //     //     .status(404)
+    //     //     .json({ status: 404, error: "404", message: "Data Not Found" });
+    //     //   return;
+    //     // }
+
+    //     const totalRecords = count;
+
+    //     // // Calculate the total pages and filtered pages
+    //     const totalPage = Math.ceil(totalRecords / length);
+
+    //     res.status(200).json({
+    //       totalRecords,
+    //       totalPage,
+    //       filteredRecords: data.length,
+    //       data,
+    //     });
+    //     return;
+    //   }
+    // }
 
     // if(companyFilter)
 
@@ -2311,7 +2388,7 @@ const distinctProst = async (req, res) => {
     query.country = "India";
     // if (industries) query.industries = industries;
 
-    const data = await Employee.find({ query }).toArray();
+    const data = await Employee.distinct("jobTitle").limit(100);
 
     const cnt = await Employee.data;
     console.log("cnt", cnt);
