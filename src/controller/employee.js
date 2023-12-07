@@ -2225,7 +2225,8 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       res.status(200).json({ message: "Please select filters" });
       return;
     }
-    console.log("Filter", filter);
+    console.log("Filter++", filter);
+    // console.log("company_size", company_size);
 
     if (searchByCompanyAndEmail.length > 0 || company_size.length > 0) {
       const companyData = await Employee.find(filter).limit(length).skip(start);
@@ -2406,7 +2407,7 @@ const distinctProst = async (req, res) => {
     query.country = "India";
     // if (industries) query.industries = industries;
 
-    const data = await Employee.distinct("companyName");
+    const data = await Employee.distinct({ query }).toArray();
 
     const cnt = await Employee.data;
     console.log("cnt", cnt);

@@ -1493,7 +1493,7 @@ const accountData = async (req, res) => {
     const {
       length,
       start,
-      companySize,
+      company_size,
       searchByCountry,
       searchByIndustry,
       continent,
@@ -1506,9 +1506,9 @@ const accountData = async (req, res) => {
 
     const filter = {};
 
-    if (companySize.length > 0) {
+    if (company_size.length > 0) {
       filter.company_size = {
-        $in: companySize.map((title) => new RegExp(title, "i")),
+        $in: company_size.map((title) => new RegExp(title, "i")),
       };
     }
 
