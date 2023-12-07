@@ -1499,7 +1499,7 @@ const accountData = async (req, res) => {
       continent,
       region,
       industry,
-      jobFunction,
+      // jobFunction,
       intentSignals,
       searchByCompanyAndWebsite,
     } = req.body;
@@ -1580,6 +1580,8 @@ const accountData = async (req, res) => {
 
     const data = await Local.find(filter).skip(start).limit(length);
     console.log("data", data);
+
+    // if(!data)
 
     const count = await Local.countDocuments(filter);
     const totalRecords = count;

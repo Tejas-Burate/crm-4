@@ -2068,7 +2068,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       length,
       sortField,
       sortOrder,
-      searchByCompanyAndEmail,
+      searchByCompanyAndWebsite,
       company_size,
       search,
       industryAndSector,
@@ -2131,30 +2131,20 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       }
     }
 
-    // Apply search by company and email if specified
-    // Apply search by company and email if specified
-    // if (
-    //   Array.isArray(searchByCompanyAndEmail) &&
-    //   searchByCompanyAndEmail.length > 0
-    // ) {
-    //   filter.companyName = {
-    //     $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
-    //   };
-    // }
-
     if (
-      Array.isArray(searchByCompanyAndEmail) &&
-      searchByCompanyAndEmail.length > 0
+      Array.isArray(searchByCompanyAndWebsite) &&
+      searchByCompanyAndWebsite.length > 0
     ) {
+      console.log("At searchByCompanyAndWebsite Filter");
       filter.$or = [
         {
           companyName: {
-            $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+            $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
           },
         },
         {
           websit: {
-            $in: searchByCompanyAndEmail.map((name) => new RegExp(name, "i")),
+            $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
           },
         },
       ];
@@ -2162,11 +2152,12 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     if (Array.isArray(company_size) && company_size.length > 0) {
       // Find documents in Local collection where company_size is in the given array
+      console.log("At company_size filter");
       const data = await Local.find({
         company_size: { $in: company_size },
-      }).limit(10);
+      }).limit(1000);
 
-      console.log("company_size data", data);
+      // console.log("company_size data", data);
 
       // Extract the company names from the retrieved data
       const companyNames = data.map((item) => item.name);
@@ -2193,12 +2184,6 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
         $in: companyNames,
       };
     }
-
-    // if (searchByCompanyAndEmail) {
-    //   companyFilter.$or = [
-    //     { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
-    //   ];
-    // }
 
     // Apply search if specified
     if (search) {
@@ -2228,9 +2213,10 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     console.log("Filter++", filter);
     // console.log("company_size", company_size);
 
-    if (searchByCompanyAndEmail.length > 0 || company_size.length > 0) {
+    if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0) {
+      console.log("At searchByCompanyAndWebsite And company_size filter");
       const companyData = await Employee.find(filter).limit(length).skip(start);
-      console.log("companyData", companyData);
+      // console.log("companyData", companyData);
 
       if (companyData && companyData.length > 0) {
         const companyNames = companyData.map((cm) => cm.companyName);
@@ -2244,7 +2230,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
           },
         });
 
-        console.log("accountData", accountData);
+        // console.log("accountData", accountData);
 
         const count = await Employee.countDocuments(filter);
         console.log("count", count);
