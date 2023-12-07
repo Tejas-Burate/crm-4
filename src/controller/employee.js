@@ -2071,6 +2071,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       searchByCompanyAndEmail,
       company_size,
       search,
+      industryAndSector,
       // searchByJobTitle,
       seniority,
       searchByCountry,
@@ -2176,6 +2177,23 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       };
     }
 
+    if (Array.isArray(industryAndSector) && industryAndSector.length > 0) {
+      // Find documents in Local collection where company_size is in the given array
+      const data = await Local.find({
+        industryAndSector: { $in: company_size },
+      }).limit(10);
+
+      console.log("company_size data", data);
+
+      // Extract the company names from the retrieved data
+      const companyNames = data.map((item) => item.name);
+
+      // Use the company names in the $in operator for companyName
+      filter.companyName = {
+        $in: companyNames,
+      };
+    }
+
     // if (searchByCompanyAndEmail) {
     //   companyFilter.$or = [
     //     { companyName: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
@@ -2238,7 +2256,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
           return {
             fullName: cm.fullName,
             jobTitle: cm.jobTitle,
-            company: matchingAccount?.name || null,
+            companyName: matchingAccount?.name || null,
             location: cm.prospectLocation,
             company_size: matchingAccount?.company_size || null,
             industry: matchingAccount?.industries || null,
@@ -2388,7 +2406,7 @@ const distinctProst = async (req, res) => {
     query.country = "India";
     // if (industries) query.industries = industries;
 
-    const data = await Employee.distinct("jobTitle").limit(100);
+    const data = await Employee.distinct("companyName");
 
     const cnt = await Employee.data;
     console.log("cnt", cnt);
