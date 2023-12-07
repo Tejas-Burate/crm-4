@@ -1581,7 +1581,12 @@ const accountData = async (req, res) => {
     const data = await Local.find(filter).skip(start).limit(length);
     console.log("data", data);
 
-    // if(!data)
+    if (!data) {
+      res
+        .status(404)
+        .json({ status: 404, error: "404", message: "Data Not Found" });
+      return;
+    }
 
     const count = await Local.countDocuments(filter);
     const totalRecords = count;
