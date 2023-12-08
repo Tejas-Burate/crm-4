@@ -1616,6 +1616,10 @@ const accountData = async (req, res) => {
     // }
 
     console.log("Filter 2", filter);
+    if (Object.keys(filter).length === 0) {
+      res.status(200).json({ message: "Please select filters" });
+      return;
+    }
 
     const data = await Local.find(filter).skip(start).limit(length);
     // console.log("data", data);

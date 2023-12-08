@@ -2206,12 +2206,13 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     // Sorting
     // const sort = sortField ? { [sortField]: sortOrder === "asc" ? 1 : -1 } : {};
 
+    console.log("Filter++", filter);
+    // console.log("company_size", company_size);
+
     if (Object.keys(filter).length === 0) {
       res.status(200).json({ message: "Please select filters" });
       return;
     }
-    console.log("Filter++", filter);
-    // console.log("company_size", company_size);
 
     if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0) {
       console.log("At searchByCompanyAndWebsite And company_size filter");
