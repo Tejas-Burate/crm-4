@@ -2216,7 +2216,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0) {
       console.log("At searchByCompanyAndWebsite And company_size filter");
       const companyData = await Employee.find(filter).limit(length).skip(start);
-      // console.log("companyData", companyData);
+      console.log("companyData", companyData);
 
       if (companyData && companyData.length > 0) {
         const companyNames = companyData.map((cm) => cm.companyName);
@@ -2233,7 +2233,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
         // console.log("accountData", accountData);
 
         const count = await Employee.countDocuments(filter);
-        console.log("count", count);
+        console.log("count if", count);
 
         const data = companyData.map((cm) => {
           const matchingAccount = accountData.find(

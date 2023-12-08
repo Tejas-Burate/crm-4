@@ -1521,6 +1521,7 @@ const accountData = async (req, res) => {
     if (searchByIndustry.length > 0) {
       filter.industries = {
         $in: searchByIndustry.map((title) => new RegExp(title, "i")),
+        // $in: searchByIndustry.map((title) => new RegExp(`^${title}$`)),
       };
     }
 
@@ -1548,24 +1549,62 @@ const accountData = async (req, res) => {
       };
     }
 
+    console.log("Filter 2", filter);
+
     if (searchByCompanyAndWebsite.length > 0) {
+      console.log("AT SBCW");
+
+      // Add $or condition directly to filter
       filter.$or = [
         {
-          website: {
+          name: {
             $in: searchByCompanyAndWebsite.map(
-              (title) => new RegExp(title, "i")
+              (name) => new RegExp(`^${name}$`)
             ),
           },
         },
         {
-          name: {
+          website: {
             $in: searchByCompanyAndWebsite.map(
-              (title) => new RegExp(title, "i")
+              (name) => new RegExp(`^${name}$`)
             ),
           },
         },
       ];
     }
+
+    // if (searchByCompanyAndWebsite.length > 0) {
+    //   console.log("AT SBCW");
+
+    //   const data = await Local.find({
+    //     $or: [
+    //       {
+    //         name: {
+    //           $in: searchByCompanyAndWebsite.map(
+    //             (name) => new RegExp(`^${name}$`)
+    //           ),
+    //         },
+    //       },
+    //       {
+    //         website: {
+    //           $in: searchByCompanyAndWebsite.map(
+    //             (name) => new RegExp(`^${name}$`)
+    //           ),
+    //         },
+    //       },
+    //     ],
+    //   });
+
+    //   console.log("data", data);
+    //   const companyNames = data.map((item) => item.name);
+
+    //   // Correct the variable name to 'companyNames' instead of 'name'
+    //   filter.companyName = {
+    //     $in: companyNames, // Fix: Use 'companyNames' instead of 'name'
+    //   };
+
+    //   console.log("companyNames", companyNames);
+    // }
 
     // if (searchByCompanyAndWebsite.length > 0) {
     //   filter.$or = searchByCompanyAndWebsite.map((title) => ({
@@ -1576,10 +1615,10 @@ const accountData = async (req, res) => {
     //   }));
     // }
 
-    console.log("Filter", filter);
+    console.log("Filter 2", filter);
 
     const data = await Local.find(filter).skip(start).limit(length);
-    console.log("data", data);
+    // console.log("data", data);
 
     if (!data) {
       res
