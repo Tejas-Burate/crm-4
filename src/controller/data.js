@@ -1506,11 +1506,12 @@ const accountData = async (req, res) => {
 
     const filter = {};
 
-    if (company_size.length > 0) {
+    if (company_size && company_size.length > 0) {
       filter.company_size = {
-        $in: company_size.map((title) => new RegExp(title, "i")),
+          $in: company_size.map((title) => new RegExp(title, "i")),
       };
-    }
+  }
+  
 
     if (industry.length > 0) {
       filter.industries = {
@@ -1573,48 +1574,6 @@ const accountData = async (req, res) => {
       ];
     }
 
-    // if (searchByCompanyAndWebsite.length > 0) {
-    //   console.log("AT SBCW");
-
-    //   const data = await Local.find({
-    //     $or: [
-    //       {
-    //         name: {
-    //           $in: searchByCompanyAndWebsite.map(
-    //             (name) => new RegExp(`^${name}$`)
-    //           ),
-    //         },
-    //       },
-    //       {
-    //         website: {
-    //           $in: searchByCompanyAndWebsite.map(
-    //             (name) => new RegExp(`^${name}$`)
-    //           ),
-    //         },
-    //       },
-    //     ],
-    //   });
-
-    //   console.log("data", data);
-    //   const companyNames = data.map((item) => item.name);
-
-    //   // Correct the variable name to 'companyNames' instead of 'name'
-    //   filter.companyName = {
-    //     $in: companyNames, // Fix: Use 'companyNames' instead of 'name'
-    //   };
-
-    //   console.log("companyNames", companyNames);
-    // }
-
-    // if (searchByCompanyAndWebsite.length > 0) {
-    //   filter.$or = searchByCompanyAndWebsite.map((title) => ({
-    //     $or: [
-    //       { website: { $regex: new RegExp(title, "i") } },
-    //       { name: { $regex: new RegExp(title, "i") } },
-    //     ],
-    //   }));
-    // }
-
     console.log("Filter 2", filter);
     if (Object.keys(filter).length === 0) {
       res.status(200).json({ message: "Please select filters" });
@@ -1622,9 +1581,9 @@ const accountData = async (req, res) => {
     }
 
     const data = await Local.find(filter).skip(start).limit(length);
-    // console.log("data", data);
+    console.log("data", data);
 
-    if (!data) {
+    if (data.length === 0) {
       res
         .status(404)
         .json({ status: 404, error: "404", message: "Data Not Found" });
@@ -1653,74 +1612,48 @@ const accountData = async (req, res) => {
   }
 };
 
-//Filter
-// const accountData = async (req, res) => {
+//10 response
+const src = async (req, res) => {
+  try {
+    const { searchByCompanyAndEmail } = req.body;
+    console.log("Stage 1");
+
+    const data = await Local.find({
+      name: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
+    })
+      .select("_id name website")
+      .limit(10);
+
+    if (!data || data.length === 0) {
+      res.status(404).json("Data Not found");
+      return;
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json("Internal Server Error");
+  }
+};
+
+//1 response
+// const src = async (req, res) => {
 //   try {
-//     const {
-//       length,
-//       start,
-//       companySize,
-//       geo,
-//       industry,
-//       jobFunction,
-//       intentSignals,
-//       searchByCompanyAndWebsite,
-//     } = req.body;
+//     const { searchByCompanyAndEmail } = req.body;
+//     console.log("Stage 1");
 
-//     const filter = {};
+//     const data = await Local.findOne({
+//       name: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
+//     });
 
-//     if (Array.isArray(companySize) && companySize.length > 0) {
-//       filter.company_size = {
-//         $in: companySize.map((title) => new RegExp(title, "i")),
-//       };
+//     if (!data) {
+//       res.status(404).json("Data Not found");
+//       return;
 //     }
 
-//     if (Array.isArray(industry) && industry.length > 0) {
-//       filter.industries = {
-//         $in: industry.map((title) => new RegExp(title, "i")),
-//       };
-//     }
-
-//     if (Array.isArray(jobFunction) && jobFunction.length > 0) {
-//       filter.jobFunction = {
-//         $in: jobFunction.map((title) => new RegExp(title, "i")),
-//       };
-//     }
-
-//     if (Array.isArray(geo) && geo.length > 0) {
-//       const regionFilter = geo.map((c) => ({
-//         country_code: { $in: regions[c] || [] },
-//       }));
-//       filter.$or = regionFilter;
-//     }
-
-//     if (searchByCompanyAndWebsite) {
-//       filter.$or = [
-//         { website: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
-//         { companyName: { $regex: new RegExp(searchByCompanyAndWebsite, "i") } },
-//       ];
-//     }
-
-//     const explanation = await Local.find(filter).explain();
-//     console.log("explanation", explanation);
-//     const data = await Local.find(filter).skip(start).limit(length);
-
-//     const totalRecords = explanation.executionStats.nReturned;
-//     const totalPage = Math.ceil(totalRecords / length);
-//     const filteredPages = Math.ceil(data.length / length);
-
-//     const result = {
-//       recordsTotal: totalRecords,
-//       recordsFiltered: data.length,
-//       totalPages: totalPage,
-//       currentPage: filteredPages,
-//       recordsPerPage: length,
-//       data: data,
-//     };
-
-//     res.status(200).json(result);
+//     res.status(200).json(data);
 //   } catch (error) {
-//     console.error("error", error);
+//     console.log("error", error);
 //     res.status(500).json("Internal Server Error");
 //   }
 // };
@@ -1970,6 +1903,7 @@ const crmData = asyncHandler(async (req, res) => {
 
 module.exports = {
   getData,
+  src,
   chartForRegionNorthAmerica,
   getDataTable,
   chartForCompanySize,

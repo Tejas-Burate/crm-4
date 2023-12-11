@@ -2319,8 +2319,8 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 
     // if(companyFilter)
 
-    // const explanation = await Employee.find(filter).explain();
-    // console.log("explanation", explanation);
+    const explanation = await Employee.find(filter).explain();
+    console.log("explanation", explanation);
     const count = await Employee.countDocuments(filter);
     console.log("count", count);
 
@@ -2340,13 +2340,6 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     // Calculate the total pages and filtered pages
     const totalPage = Math.ceil(totalRecords / length);
 
-    // Get matched continent and associated countries
-    // const matchedContinent =
-    //   continent && continent.length > 0 ? continent[0] : null;
-    // const matchedCountries = matchedContinent
-    //   ? continentsToCountries[matchedContinent] || []
-    //   : [];
-
     res.status(200).json({
       totalRecords,
       totalPage,
@@ -2362,6 +2355,38 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       error: "500",
       message: "Internal Server Error",
     });
+  }
+};
+
+const search = async (req, res) => {
+  try {
+    const { searchByCompanyAndEmail } = req.body;
+    console.log("Stage 1");
+    const data = await Employee.find({
+      companyName: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
+    });
+
+    console.log("data", data);
+    const cnt = data.length;
+    console.log("cnt", cnt);
+
+    // const explain = await Employee.find({
+    //   companyName: searchByCompanyAndEmail,
+    // }).explain();
+
+    // console.log("explain", explain);
+    if (!data) {
+      res.status(404).json("Data Not found");
+      return;
+    }
+    if (data.length === 0) {
+      res.status(404).json("Data Not found");
+      return;
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json("Internal Server Error");
   }
 };
 
@@ -2472,6 +2497,7 @@ const filterEmailAndCompanyName = async (req, res) => {
 
 module.exports = {
   getAllCompanyList,
+  search,
   accountCount,
   distinctProst,
   employeeFilter,

@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   getAllCompanyList,
+  search,
   employeeFilter,
   searchByJobTitle,
   searchByDepartment,
@@ -19,6 +20,7 @@ router.get("/accountCount", accountCount);
 router.get("/distinctProst", distinctProst);
 router.get("/chartForIndustries", chartForIndustries);
 router.post("/employeeFilter", employeeFilter);
+router.post("/search", search);
 router.post("/searchByJobTitle", searchByJobTitle);
 router.post("/searchByDepartment", searchByDepartment);
 router.post("/searchByDepartmentAndJobTitle", searchByDepartmentAndJobTitle);

@@ -5,6 +5,7 @@ const {
   chartForCompanySize,
   chartForRegion,
   crmData,
+  src,
   chartForRegionNorthAmerica,
   totalFilterRecords,
   chartForIndustry,
@@ -14,6 +15,7 @@ const {
 const router = express.Router();
 
 router.post("/getData", getData);
+router.post("/src", src);
 router.post("/getDataTable", getDataTable);
 router.get("/chartForCompanySize", chartForCompanySize);
 router.get("/chartForRegion", chartForRegion);
