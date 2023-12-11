@@ -1616,7 +1616,7 @@ const accountData = async (req, res) => {
 const src = async (req, res) => {
   try {
     const { searchByCompanyAndEmail } = req.body;
-    console.log("Stage 1");
+    console.log("Stage 2");
 
     const data = await Local.find({
       name: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
