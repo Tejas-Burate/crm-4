@@ -58,4 +58,26 @@ const jobTitles = [
 
 
 ]
-  
+
+
+[
+  "Software Engineer":352650,
+    "Marketing Manager"235167:,
+    "Sales Associate":108366,
+    "Chief Financial Officer":216027:,
+    "Customer Service Representative":75339,
+    "Human Resources Specialist"18274:,
+    "Data Analyst":46060,
+    "Operations Manager":362046,
+    "Graphic Designer":51697,
+    "Product Manager":222051,
+    "Research Scientist":20993,
+    "Executive Assistant":123929,
+    "Project Manager":795879,
+    "Healthcare Administrator":291,
+    "Legal Counsel":9846,
+    "Quality Assurance Engineer":9762,
+    "Social Media Coordinator":3629,
+    "Business Development Representative":9072,
+    "UX/UI Designer":
+]

@@ -1,6 +1,8 @@
 const Employee = require("../model/employee");
 const Local = require("../model/data");
 const Data = require("../model/data");
+const DCNAW = require("../model/dcNameAndWebsite");
+const { ObjectId } = require('mongodb');
 
 const getAllCompanyList = async (req, res) => {
   try {
@@ -131,6 +133,140 @@ const employeeFilter = async (req, res) => {
       .json({ status: 500, error: "500", message: "Internal Server Error" });
   }
 };
+
+const chartForJobTitles =async (req, res) => {
+  try {
+    const jobTitles = [
+      "Software Engineer"
+      // "Marketing Manager",
+      // "Sales Associate",
+      // "Chief Financial Officer (CFO)",
+      // "Customer Service Representative",
+      // "Human Resources Specialist",
+      // "Data Analyst",
+      // "Operations Manager",
+      // "Graphic Designer",
+      // "Product Manager",
+      // "Research Scientist",
+      // "IT Support Specialist",
+      // "Executive Assistant",
+      // "Project Manager",
+      // "Healthcare Administrator",
+      // "Legal Counsel",
+      // "Quality Assurance Engineer",
+      // "Social Media Coordinator",
+      // "Business Development Representative",
+      // "UX/UI Designer"
+    ]
+
+    const jobTitleSizeCounts = await Employee.aggregate([
+      {
+        $match: {
+          $or: jobTitles.map(title => ({ jobTitle: { $regex: new RegExp(title, 'i') } })),
+        },
+        
+              
+      },
+      {
+        $group: {
+          _id: "$jobTitle",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          jobTitle: "$_id",
+          count: 1,
+        },
+      },
+    ]).exec();
+
+    const result = {
+      total: 0,
+    };
+
+    console.log("jobTitleSizeCounts",jobTitleSizeCounts)
+
+    jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
+      result[jobTitle] = count;
+      // result.total += count;
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+// const chartForJobTitles = async (req, res) => {
+//   try {
+//     const jobTitles = [
+//       "Software Engineer",
+//       "Marketing Manager",
+//       "Sales Associate",
+//       "Chief Financial Officer (CFO)",
+//       "Customer Service Representative",
+//       "Human Resources Specialist",
+//       "Data Analyst",
+//       "Operations Manager",
+//       "Graphic Designer",
+//       "Product Manager",
+//       "Research Scientist",
+//       "IT Support Specialist",
+//       "Executive Assistant",
+//       "Project Manager",
+//       "Healthcare Administrator",
+//       "Legal Counsel",
+//       "Quality Assurance Engineer",
+//       "Social Media Coordinator",
+//       "Business Development Representative",
+//       "UX/UI Designer"
+//     ];
+
+//     const regexJobTitles = jobTitles.map(title => new RegExp(title, 'i'));
+
+//     const jobTitleSizeCounts = await Employee.aggregate([
+//       {
+//         $match: {
+//           jobTitle: { $in: regexJobTitles },
+//         },
+//       },
+//       {
+//         $group: {
+//           _id: "$jobTitle",
+//           count: { $sum: 1 },
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: 0,
+//           jobTitle: "$_id",
+//           count: 1,
+//         },
+//       },
+//     ]).exec();
+
+//     const result = {
+//       total: 0,
+//     };
+
+//     console.log("jobTitleSizeCounts", jobTitleSizeCounts);
+
+//     jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
+//       result[jobTitle] = count;
+//       // result.total += count;
+//     });
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// };
+
+
 
 const searchByJobTitle = async (req, res) => {
   try {
@@ -670,6 +806,7 @@ const chartForIndustries = async (req, res) => {
     res.status(500).json({ error: "An error occurred" });
   }
 };
+
 
 const industries = {
   Accounting: ["Accounting"],
@@ -2072,7 +2209,6 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       company_size,
       search,
       industryAndSector,
-      // searchByJobTitle,
       seniority,
       searchByCountry,
       continent,
@@ -2131,31 +2267,51 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       }
     }
 
-    if (
-      Array.isArray(searchByCompanyAndWebsite) &&
-      searchByCompanyAndWebsite.length > 0
-    ) {
-      console.log("At searchByCompanyAndWebsite Filter");
-      filter.$or = [
-        {
-          companyName: {
-            $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
-          },
-        },
-        {
-          websit: {
-            $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
-          },
-        },
-      ];
-    }
+//     if (
+//       Array.isArray(searchByCompanyAndWebsite) &&
+//       searchByCompanyAndWebsite.length > 0
+//         )
+//   {
+//       console.log("At searchByCompanyAndWebsite Filter");
+//       filter.$or = [
+//         {
+//           companyName: {
+//             $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
+//           },
+//         },
+//         {
+//           websit: {
+//             $in: searchByCompanyAndWebsite.map((name) => new RegExp(name, "i")),
+//           },
+//         },
+//       ];
+// }
+
+if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length > 0) {
+  // console.log("At searchByCompanyAndWebsite Filter");
+  console.log('searchByCompanyAndWebsite', searchByCompanyAndWebsite)
+
+  const data = await Local.find({_id:searchByCompanyAndWebsite});
+  console.log('data', data)
+
+  const companyNames = data.map((item) => item.name);
+
+      // Use the company names in the $in operator for companyName
+      filter.companyName = {
+        $in: companyNames,
+      };
+
+  // filter._id = { $in: searchByCompanyAndWebsite };
+}
+
+
 
     if (Array.isArray(company_size) && company_size.length > 0) {
       // Find documents in Local collection where company_size is in the given array
       console.log("At company_size filter");
       const data = await Local.find({
         company_size: { $in: company_size },
-      }).limit(1000);
+      }).limit(100000);
 
       // console.log("company_size data", data);
 
@@ -2171,10 +2327,10 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
     if (Array.isArray(industryAndSector) && industryAndSector.length > 0) {
       // Find documents in Local collection where company_size is in the given array
       const data = await Local.find({
-        industryAndSector: { $in: company_size },
+        industries: { $in: industryAndSector },
       }).limit(10);
 
-      console.log("company_size data", data);
+      console.log("Industries data", data);
 
       // Extract the company names from the retrieved data
       const companyNames = data.map((item) => item.name);
@@ -2214,7 +2370,7 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       return;
     }
 
-    if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0) {
+    if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0 || industryAndSector.length>0) {
       console.log("At searchByCompanyAndWebsite And company_size filter");
       const companyData = await Employee.find(filter).limit(length).skip(start);
       console.log("companyData", companyData);
@@ -2227,9 +2383,10 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
         // Using $regex for case-insensitive exact match
         const accountData = await Local.find({
           name: {
-            $in: companyNames.map((name) => new RegExp(`^${name}$`, "i")),
+            // $in: companyNames.map((name) => new RegExp(`^${name}$`, "i")),
+            $in: companyNames,
           },
-        });
+        }).limit(length)
 
         // console.log("accountData", accountData);
 
@@ -2264,67 +2421,11 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       }
     }
 
-    // if (searchByCompanyAndEmail || company_size) {
-    //   const companyData = await Employee.find(filter).limit(length);
-    //   console.log("companyData", companyData);
-    //   // const explain = await Employee.find(filter).explain();
-
-    //   if (companyData && companyData.length > 0) {
-    //     console.log("Satge 2", companyData[0].companyName);
-    //     const accountData = await Local.find({
-    //       name: { $regex: new RegExp(companyData[0].companyName, "i") },
-    //     });
-
-    //     console.log("accountData", accountData);
-
-    //     //
-    //     const count = await Employee.countDocuments(filter);
-    //     console.log("count", count);
-
-    //     const data = companyData.map((cm) => ({
-    //       fullName: cm.fullName,
-    //       jobTitle: cm.jobTitle,
-    //       // department: cm.department,
-    //       company: accountData[0].name,
-    //       location: cm.prospectLocation,
-    //       company_size: accountData[0].company_size,
-    //       industry: accountData[0].industries,
-    //     }));
-
-    //     // console.log("result", data);
-    //     // console.log("explain", explain);
-    //     // const data = await Employee.find(filter).skip(start).limit(length);
-
-    //     // if (data.length === 0) {
-    //     //   res
-    //     //     .status(404)
-    //     //     .json({ status: 404, error: "404", message: "Data Not Found" });
-    //     //   return;
-    //     // }
-
-    //     const totalRecords = count;
-
-    //     // // Calculate the total pages and filtered pages
-    //     const totalPage = Math.ceil(totalRecords / length);
-
-    //     res.status(200).json({
-    //       totalRecords,
-    //       totalPage,
-    //       filteredRecords: data.length,
-    //       data,
-    //     });
-    //     return;
-    //   }
-    // }
-
-    // if(companyFilter)
-
-    const explanation = await Employee.find(filter).explain();
-    console.log("explanation", explanation);
-    const count = await Employee.countDocuments(filter);
-    console.log("count", count);
-
-    const data = await Employee.find(filter).skip(start).limit(length);
+   
+    const [count, data] = await Promise.all([
+      Employee.countDocuments(filter),
+      Employee.find(filter).skip(start).limit(length),
+    ]);
 
     if (data.length === 0) {
       res
@@ -2345,8 +2446,6 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
       totalPage,
       filteredRecords: data.length,
       data,
-      // matchedContinent,
-      // matchedCountries,
     });
   } catch (error) {
     console.log("error", error);
@@ -2361,28 +2460,22 @@ const searchByDepartmentAndJobTitle = async (req, res) => {
 const search = async (req, res) => {
   try {
     const { searchByCompanyAndEmail } = req.body;
-    console.log("Stage 1");
-    const data = await Employee.find({
-      companyName: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
-    });
+    console.log('searchByCompanyAndEmail', searchByCompanyAndEmail)
+    console.log("Stage 2");
 
-    console.log("data", data);
-    const cnt = data.length;
-    console.log("cnt", cnt);
-
-    // const explain = await Employee.find({
-    //   companyName: searchByCompanyAndEmail,
-    // }).explain();
-
-    // console.log("explain", explain);
-    if (!data) {
+    const data = await DCNAW.find({
+      $or: [
+        { name: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") } },
+        { website: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
+      ]
+    }).limit(10);
+    
+   
+    if (!data || data.length === 0) {
       res.status(404).json("Data Not found");
       return;
     }
-    if (data.length === 0) {
-      res.status(404).json("Data Not found");
-      return;
-    }
+
     res.status(200).json(data);
   } catch (error) {
     console.log("error", error);
@@ -2500,6 +2593,7 @@ module.exports = {
   search,
   accountCount,
   distinctProst,
+  chartForJobTitles,
   employeeFilter,
   searchByJobTitle,
   searchByDepartment,

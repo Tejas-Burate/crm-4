@@ -1,272 +1,15 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId
 const Local = require("../model/data");
+const DCNAW = require("../model/dcNameAndWebsite");
 const asyncHandler = require("express-async-handler");
 
 const getData = async (req, res) => {
   try {
     const { start, length, geo } = req.body;
 
-    const data = await Local.find(
-      {
-        // country_code: {
-        //   $in: [
-        //     "AD",
-        //     "AE",
-        //     "AF",
-        //     "AG",
-        //     "AI",
-        //     "AL",
-        //     "AM",
-        //     "AO",
-        //     "AQ",
-        //     "AR",
-        //     "AS",
-        //     "AT",
-        //     "AU",
-        //     "AW",
-        //     "AZ",
-        //     "BA",
-        //     "BB",
-        //     "BD",
-        //     "BE",
-        //     "BF",
-        //     "BG",
-        //     "BH",
-        //     "BI",
-        //     "BJ",
-        //     "BL",
-        //     "BM",
-        //     "BN",
-        //     "BO",
-        //     "BQ",
-        //     "BR",
-        //     "BS",
-        //     "BT",
-        //     "BV",
-        //     "BW",
-        //     "BY",
-        //     "BZ",
-        //     "CA",
-        //     "CC",
-        //     "CD",
-        //     "CF",
-        //     "CG",
-        //     "CH",
-        //     "CI",
-        //     "CK",
-        //     "CL",
-        //     "CM",
-        //     "CN",
-        //     "CO",
-        //     "CR",
-        //     "CU",
-        //     "CV",
-        //     "CW",
-        //     "CX",
-        //     "CY",
-        //     "CZ",
-        //     "DE",
-        //     "DJ",
-        //     "DK",
-        //     "DM",
-        //     "DO",
-        //     "DZ",
-        //     "EC",
-        //     "EE",
-        //     "EG",
-        //     "EH",
-        //     "ER",
-        //     "ES",
-        //     "ET",
-        //     "FI",
-        //     "FJ",
-        //     "FK",
-        //     "FM",
-        //     "FO",
-        //     "FR",
-        //     "GA",
-        //     "GB",
-        //     "GD",
-        //     "GE",
-        //     "GF",
-        //     "GG",
-        //     "GH",
-        //     "GI",
-        //     "GL",
-        //     "GM",
-        //     "GN",
-        //     "GP",
-        //     "GQ",
-        //     "GR",
-        //     "GS",
-        //     "GT",
-        //     "GU",
-        //     "GW",
-        //     "GY",
-        //     "HK",
-        //     "HM",
-        //     "HN",
-        //     "HR",
-        //     "HT",
-        //     "HU",
-        //     "ID",
-        //     "IE",
-        //     "IL",
-        //     "IM",
-        //     "IN",
-        //     "IO",
-        //     "IQ",
-        //     "IR",
-        //     "IS",
-        //     "IT",
-        //     "JE",
-        //     "JM",
-        //     "JO",
-        //     "JP",
-        //     "KE",
-        //     "KG",
-        //     "KH",
-        //     "KI",
-        //     "KM",
-        //     "KN",
-        //     "KP",
-        //     "KR",
-        //     "KW",
-        //     "KY",
-        //     "KZ",
-        //     "LA",
-        //     "LB",
-        //     "LC",
-        //     "LI",
-        //     "LK",
-        //     "LR",
-        //     "LS",
-        //     "LT",
-        //     "LU",
-        //     "LV",
-        //     "LY",
-        //     "MA",
-        //     "MC",
-        //     "MD",
-        //     "ME",
-        //     "MF",
-        //     "MG",
-        //     "MH",
-        //     "MK",
-        //     "ML",
-        //     "MM",
-        //     "MN",
-        //     "MO",
-        //     "MP",
-        //     "MQ",
-        //     "MR",
-        //     "MS",
-        //     "MT",
-        //     "MU",
-        //     "MV",
-        //     "MW",
-        //     "MX",
-        //     "MY",
-        //     "MZ",
-        //     "NC",
-        //     "NE",
-        //     "NF",
-        //     "NG",
-        //     "NI",
-        //     "NL",
-        //     "NO",
-        //     "NP",
-        //     "NR",
-        //     "NZ",
-        //     "OM",
-        //     "PA",
-        //     "PE",
-        //     "PF",
-        //     "PG",
-        //     "PH",
-        //     "PK",
-        //     "PL",
-        //     "PM",
-        //     "PN",
-        //     "PR",
-        //     "PS",
-        //     "PT",
-        //     "PW",
-        //     "PY",
-        //     "QA",
-        //     "RE",
-        //     "RO",
-        //     "RS",
-        //     "RU",
-        //     "RW",
-        //     "SA",
-        //     "SB",
-        //     "SC",
-        //     "SD",
-        //     "SE",
-        //     "SG",
-        //     "SH",
-        //     "SI",
-        //     "SJ",
-        //     "SK",
-        //     "SL",
-        //     "SM",
-        //     "SN",
-        //     "SO",
-        //     "SR",
-        //     "SS",
-        //     "ST",
-        //     "SV",
-        //     "SX",
-        //     "SY",
-        //     "SZ",
-        //     "TC",
-        //     "TD",
-        //     "TF",
-        //     "TG",
-        //     "TH",
-        //     "TJ",
-        //     "TK",
-        //     "TL",
-        //     "TM",
-        //     "TN",
-        //     "TO",
-        //     "TR",
-        //     "TT",
-        //     "TV",
-        //     "TW",
-        //     "TZ",
-        //     "UA",
-        //     "UG",
-        //     "UM",
-        //     "US",
-        //     "UY",
-        //     "UZ",
-        //     "VA",
-        //     "VC",
-        //     "VE",
-        //     "VG",
-        //     "VI",
-        //     "VN",
-        //     "VU",
-        //     "WF",
-        //     "WS",
-        //     "XK",
-        //     "YE",
-        //     "YT",
-        //     "ZA",
-        //     "ZM",
-        //     "ZW",
-        //   ],
-        // },
-        region: "AF",
-      },
-      { country_code: 1, region: 1, _id: 0 }
-    ).limit(10000000);
-    console.log(data);
-
-    const dis = await data.distinct("country_code");
+    const data = await DCNAW.find().limit(100);
+     
 
     // const count = await Local.countDocuments({ region: "" });
     if (!data) {
@@ -276,11 +19,7 @@ const getData = async (req, res) => {
       return;
     }
 
-    const result = {
-      dis: dis,
-      // data: data,
-    };
-    res.status(200).json(result);
+    res.status(200).json(data);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -1507,6 +1246,8 @@ const accountData = async (req, res) => {
     const filter = {};
 
     if (company_size && company_size.length > 0) {
+      console.log('company_size', company_size)
+      
       filter.company_size = {
           $in: company_size.map((title) => new RegExp(title, "i")),
       };
@@ -1555,23 +1296,33 @@ const accountData = async (req, res) => {
     if (searchByCompanyAndWebsite.length > 0) {
       console.log("AT SBCW");
 
-      // Add $or condition directly to filter
-      filter.$or = [
-        {
-          name: {
-            $in: searchByCompanyAndWebsite.map(
-              (name) => new RegExp(`^${name}$`)
-            ),
-          },
-        },
-        {
-          website: {
-            $in: searchByCompanyAndWebsite.map(
-              (name) => new RegExp(`^${name}$`)
-            ),
-          },
-        },
-      ];
+      const data = await Local.find({_id:searchByCompanyAndWebsite});
+      console.log('data', data)
+    
+      const companyNames = data.map((item) => item.name);
+    
+          // Use the company names in the $in operator for companyName
+          filter.name = {
+            $in: companyNames,
+          };
+
+      // // Add $or condition directly to filter
+      // filter.$or = [
+      //   {
+      //     name: {
+      //       $in: searchByCompanyAndWebsite.map(
+      //         (name) => new RegExp(`^${name}$`)
+      //       ),
+      //     },
+      //   },
+      //   {
+      //     website: {
+      //       $in: searchByCompanyAndWebsite.map(
+      //         (name) => new RegExp(`^${name}$`)
+      //       ),
+      //     },
+      //   },
+      // ];
     }
 
     console.log("Filter 2", filter);
@@ -1618,12 +1369,15 @@ const src = async (req, res) => {
     const { searchByCompanyAndEmail } = req.body;
     console.log("Stage 2");
 
-    const data = await Local.find({
-      name: { $regex: new RegExp("^" + searchByCompanyAndEmail, "i") },
-    })
-      .select("_id name website")
-      .limit(10);
+    const data = await DCNAW.find({
+      $or: [
+        { name: { $regex: new RegExp("\\b" + searchByCompanyAndEmail, "i") }},
 
+        { website: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
+      ]
+    }).limit(10);
+    
+   
     if (!data || data.length === 0) {
       res.status(404).json("Data Not found");
       return;

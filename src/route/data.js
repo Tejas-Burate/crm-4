@@ -14,7 +14,7 @@ const {
 
 const router = express.Router();
 
-router.post("/getData", getData);
+router.get("/getData", getData);
 router.post("/src", src);
 router.post("/getDataTable", getDataTable);
 router.get("/chartForCompanySize", chartForCompanySize);
