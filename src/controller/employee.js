@@ -134,108 +134,31 @@ const employeeFilter = async (req, res) => {
   }
 };
 
-const chartForJobTitles =async (req, res) => {
-  try {
-    const jobTitles = [
-      "Software Engineer"
-      // "Marketing Manager",
-      // "Sales Associate",
-      // "Chief Financial Officer (CFO)",
-      // "Customer Service Representative",
-      // "Human Resources Specialist",
-      // "Data Analyst",
-      // "Operations Manager",
-      // "Graphic Designer",
-      // "Product Manager",
-      // "Research Scientist",
-      // "IT Support Specialist",
-      // "Executive Assistant",
-      // "Project Manager",
-      // "Healthcare Administrator",
-      // "Legal Counsel",
-      // "Quality Assurance Engineer",
-      // "Social Media Coordinator",
-      // "Business Development Representative",
-      // "UX/UI Designer"
-    ]
-
-    const jobTitleSizeCounts = await Employee.aggregate([
-      {
-        $match: {
-          $or: jobTitles.map(title => ({ jobTitle: { $regex: new RegExp(title, 'i') } })),
-        },
-        
-              
-      },
-      {
-        $group: {
-          _id: "$jobTitle",
-          count: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          jobTitle: "$_id",
-          count: 1,
-        },
-      },
-    ]).exec();
-
-    const result = {
-      total: 0,
-    };
-
-    console.log("jobTitleSizeCounts",jobTitleSizeCounts)
-
-    jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
-      result[jobTitle] = count;
-      // result.total += count;
-    });
-
-    res.status(200).json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "An error occurred" });
-  }
-};
-
 // const chartForJobTitles = async (req, res) => {
 //   try {
 //     const jobTitles = [
 //       "Software Engineer",
 //       "Marketing Manager",
-//       "Sales Associate",
-//       "Chief Financial Officer (CFO)",
-//       "Customer Service Representative",
-//       "Human Resources Specialist",
-//       "Data Analyst",
-//       "Operations Manager",
-//       "Graphic Designer",
-//       "Product Manager",
-//       "Research Scientist",
-//       "IT Support Specialist",
-//       "Executive Assistant",
-//       "Project Manager",
-//       "Healthcare Administrator",
-//       "Legal Counsel",
-//       "Quality Assurance Engineer",
-//       "Social Media Coordinator",
-//       "Business Development Representative",
-//       "UX/UI Designer"
+//       // Add other job titles as needed
 //     ];
-
-//     const regexJobTitles = jobTitles.map(title => new RegExp(title, 'i'));
 
 //     const jobTitleSizeCounts = await Employee.aggregate([
 //       {
 //         $match: {
-//           jobTitle: { $in: regexJobTitles },
+//           $or: jobTitles.map(title => ({ jobTitle: { $regex: new RegExp(title, 'i') } })),
 //         },
 //       },
 //       {
 //         $group: {
-//           _id: "$jobTitle",
+//           _id: {
+//             $cond: {
+//               if: {
+//                 $or: jobTitles.map(title => ({ $regexMatch: { input: "$jobTitle", regex: new RegExp(title, 'i') } })),
+//               },
+//               then: "$jobTitle", // Use the actual job title here
+//               else: "Other", // Use a default category if none of the titles match
+//             },
+//           },
 //           count: { $sum: 1 },
 //         },
 //       },
@@ -256,7 +179,7 @@ const chartForJobTitles =async (req, res) => {
 
 //     jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
 //       result[jobTitle] = count;
-//       // result.total += count;
+//       result.total += count;
 //     });
 
 //     res.status(200).json(result);
@@ -265,6 +188,59 @@ const chartForJobTitles =async (req, res) => {
 //     res.status(500).json({ error: "An error occurred" });
 //   }
 // };
+
+
+
+const chartForJobTitles = async (req, res) => {
+  try {
+    const jobTitles = [
+      "Software Engineer",
+      "Marketing Manager",
+      "Sales Associate",
+      "Chief Financial Officer (CFO)",
+      "Customer Service Representative",
+      "Human Resources Specialist",
+      "Data Analyst",
+      "Operations Manager",
+      "Graphic Designer",
+      "Product Manager",
+      "Research Scientist",
+      "IT Support Specialist",
+      "Executive Assistant",
+      "Project Manager",
+      "Healthcare Administrator",
+      "Legal Counsel",
+      "Quality Assurance Engineer",
+      "Social Media Coordinator",
+      "Business Development Representative",
+      "UX/UI Designer"
+    ];
+
+    const jobTitleSizeCounts = await Employee.find({
+      jobTitle: { $in: jobTitles.map(title => new RegExp(title, 'i')) },
+    }).lean();
+
+    const result = {
+      total: 0,
+    };
+
+    const counts = {};
+
+    jobTitleSizeCounts.forEach(({ jobTitle }) => {
+      const matchedTitle = jobTitles.find(title => new RegExp(title, 'i').test(jobTitle)) || 'Other';
+      counts[matchedTitle] = (counts[matchedTitle] || 0) + 1;
+      result.total += 1;
+    });
+
+    result.jobTitleCounts = counts;
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
 
 
 
