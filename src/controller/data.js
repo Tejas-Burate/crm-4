@@ -1331,7 +1331,9 @@ const accountData = async (req, res) => {
       return;
     }
 
-    const data = await Local.find(filter).skip(start).limit(length);
+    const sortCriteria = { industries: -1 };
+
+    const data = await Local.find(filter).skip(start).limit(length).sort(sortCriteria);
     console.log("data", data);
 
     if (data.length === 0) {
