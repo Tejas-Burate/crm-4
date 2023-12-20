@@ -2291,7 +2291,7 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
   // console.log("At searchByCompanyAndWebsite Filter");
   console.log('searchByCompanyAndWebsite', searchByCompanyAndWebsite)
 
-  const data = await Local.find({_id:searchByCompanyAndWebsite});
+  const data = await DCNAW.find({_id:searchByCompanyAndWebsite});
   console.log('data', data)
 
   const companyNames = data.map((item) => item.name);
@@ -2327,8 +2327,8 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
     if (Array.isArray(industryAndSector) && industryAndSector.length > 0) {
       // Find documents in Local collection where company_size is in the given array
       const data = await Local.find({
-        industries: { $in: industryAndSector },
-      }).limit(10);
+        industries:industryAndSector
+      });
 
       console.log("Industries data", data);
 
@@ -2378,7 +2378,7 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
       if (companyData && companyData.length > 0) {
         const companyNames = companyData.map((cm) => cm.companyName);
 
-        console.log("Satge 2", companyNames);
+        // console.log("Satge 2", companyNames);
 
         // Using $regex for case-insensitive exact match
         const accountData = await Local.find({
@@ -2421,12 +2421,15 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
       }
     }
 
-   
-    const [count, data] = await Promise.all([
-      Employee.countDocuments(filter),
-      Employee.find(filter).skip(start).limit(length),
-    ]);
+   const data = await  Employee.find(filter).skip(start).limit(length);
+   const count = await  Employee.countDocuments(filter);
+   console.log('count', count)
 
+    // const [count, data] = await Promise.all([
+    //   Employee.countDocuments(filter),
+    //   Employee.find(filter).skip(start).limit(length),
+    // ]);
+console.log("Final Data",data);
     if (data.length === 0) {
       res
         .status(404)

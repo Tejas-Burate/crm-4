@@ -1367,15 +1367,14 @@ const accountData = async (req, res) => {
 const src = async (req, res) => {
   try {
     const { searchByCompanyAndEmail } = req.body;
-    console.log("Stage 2");
 
-    const data = await DCNAW.find({
+    const data = await Local.find({
       $or: [
-        { name: { $regex: new RegExp("\\b" + searchByCompanyAndEmail, "i") }},
+        { name: { $regex: new RegExp( searchByCompanyAndEmail, "i") }},
 
         { website: { $regex: new RegExp(searchByCompanyAndEmail, "i") } },
       ]
-    }).limit(10);
+    }).select("_id name website").limit(20);
     
    
     if (!data || data.length === 0) {
