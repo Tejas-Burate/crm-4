@@ -79,5 +79,33 @@ const jobTitles = [
     "Quality Assurance Engineer":9762,
     "Social Media Coordinator":3629,
     "Business Development Representative":9072,
-    "UX/UI Designer":
 ]
+
+chartForJobFunction
+{
+  "total": 11190,
+  "Marketing": 1027555,
+  "Finance": 374653,
+  "Information Technology":180946,
+  "Sales":2216282,
+  "Operations":1410093,
+  "Human Resource":657535,
+  "Customer Support":24625,
+  "Logistics":115116,
+  "Quality Control":40086,
+}
+
+
+chartForJobLevel
+{
+  "total": 1749,
+  "Owner":1158339,
+  "Senior": 1749,
+  "CXO":1072437,
+  "Head":725333,
+  "Vice President":2059939,
+  "Director":4745160,
+  "Manager":10158086,
+  "Executive":1619501,
+
+}

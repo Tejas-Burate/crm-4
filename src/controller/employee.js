@@ -134,105 +134,53 @@ const employeeFilter = async (req, res) => {
   }
 };
 
-// const chartForJobTitles = async (req, res) => {
-//   try {
-//     const jobTitles = [
-//       "Software Engineer",
-//       "Marketing Manager",
-//       // Add other job titles as needed
-//     ];
-
-//     const jobTitleSizeCounts = await Employee.aggregate([
-//       {
-//         $match: {
-//           $or: jobTitles.map(title => ({ jobTitle: { $regex: new RegExp(title, 'i') } })),
-//         },
-//       },
-//       {
-//         $group: {
-//           _id: {
-//             $cond: {
-//               if: {
-//                 $or: jobTitles.map(title => ({ $regexMatch: { input: "$jobTitle", regex: new RegExp(title, 'i') } })),
-//               },
-//               then: "$jobTitle", // Use the actual job title here
-//               else: "Other", // Use a default category if none of the titles match
-//             },
-//           },
-//           count: { $sum: 1 },
-//         },
-//       },
-//       {
-//         $project: {
-//           _id: 0,
-//           jobTitle: "$_id",
-//           count: 1,
-//         },
-//       },
-//     ]).exec();
-
-//     const result = {
-//       total: 0,
-//     };
-
-//     console.log("jobTitleSizeCounts", jobTitleSizeCounts);
-
-//     jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
-//       result[jobTitle] = count;
-//       result.total += count;
-//     });
-
-//     res.status(200).json(result);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "An error occurred" });
-//   }
-// };
-
-
-
 const chartForJobTitles = async (req, res) => {
   try {
     const jobTitles = [
       "Software Engineer",
-      "Marketing Manager",
-      "Sales Associate",
-      "Chief Financial Officer (CFO)",
-      "Customer Service Representative",
-      "Human Resources Specialist",
-      "Data Analyst",
-      "Operations Manager",
-      "Graphic Designer",
-      "Product Manager",
-      "Research Scientist",
-      "IT Support Specialist",
-      "Executive Assistant",
-      "Project Manager",
-      "Healthcare Administrator",
-      "Legal Counsel",
-      "Quality Assurance Engineer",
-      "Social Media Coordinator",
-      "Business Development Representative",
-      "UX/UI Designer"
+      // "Marketing Manager",
+      // Add other job titles as needed
     ];
 
-    const jobTitleSizeCounts = await Employee.find({
-      jobTitle: { $in: jobTitles.map(title => new RegExp(title, 'i')) },
-    }).lean();
+    const jobTitleSizeCounts = await Employee.aggregate([
+      {
+        $match: {
+          $or: jobTitles.map(title => ({ jobTitle: { $regex: new RegExp(title, 'i') } })),
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $cond: {
+              if: {
+                $or: jobTitles.map(title => ({ $regexMatch: { input: "$jobTitle", regex: new RegExp(title, 'i') } })),
+              },
+              then: "$jobTitle", // Use the actual job title here
+              else: "Other", // Use a default category if none of the titles match
+            },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          jobTitle: "$_id",
+          count: 1,
+        },
+      },
+    ]).exec();
 
     const result = {
       total: 0,
     };
 
-    const counts = {};
+    console.log("jobTitleSizeCounts", jobTitleSizeCounts);
 
-    jobTitleSizeCounts.forEach(({ jobTitle }) => {
-      const matchedTitle = jobTitles.find(title => new RegExp(title, 'i').test(jobTitle)) || 'Other';
-      counts[matchedTitle] = (counts[matchedTitle] || 0) + 1;
-      result.total += 1;
+    jobTitleSizeCounts.forEach(({ jobTitle, count }) => {
+      result[jobTitle] = count;
+      result.total += count;
     });
-
-    result.jobTitleCounts = counts;
 
     res.status(200).json(result);
   } catch (error) {
@@ -240,6 +188,58 @@ const chartForJobTitles = async (req, res) => {
     res.status(500).json({ error: "An error occurred" });
   }
 };
+
+
+
+// const chartForJobTitles = async (req, res) => {
+//   try {
+//     const jobTitles = [
+//       "Software Engineer",
+//       "Marketing Manager",
+//       "Sales Associate",
+//       "Chief Financial Officer (CFO)",
+//       "Customer Service Representative",
+//       "Human Resources Specialist",
+//       "Data Analyst",
+//       "Operations Manager",
+//       "Graphic Designer",
+//       "Product Manager",
+//       "Research Scientist",
+//       "IT Support Specialist",
+//       "Executive Assistant",
+//       "Project Manager",
+//       "Healthcare Administrator",
+//       "Legal Counsel",
+//       "Quality Assurance Engineer",
+//       "Social Media Coordinator",
+//       "Business Development Representative",
+//       "UX/UI Designer"
+//     ];
+
+//     const jobTitleSizeCounts = await Employee.find({
+//       jobTitle: { $in: jobTitles.map(title => new RegExp(title, 'i')) },
+//     }).lean();
+
+//     const result = {
+//       total: 0,
+//     };
+
+//     const counts = {};
+
+//     jobTitleSizeCounts.forEach(({ jobTitle }) => {
+//       const matchedTitle = jobTitles.find(title => new RegExp(title, 'i').test(jobTitle)) || 'Other';
+//       counts[matchedTitle] = (counts[matchedTitle] || 0) + 1;
+//       result.total += 1;
+//     });
+
+//     result.jobTitleCounts = counts;
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// };
 
 
 
@@ -783,6 +783,153 @@ const chartForIndustries = async (req, res) => {
   }
 };
 
+//
+
+const chartForJobLevel = async (req, res) => {
+  try {
+    const industryMappings = {
+      Owner: ["Owner"],
+      // CXO: ["Chief Executive Officer","CEO","CFO","Chief Financial Officer","COO" ,"Chief Operating Officer","CMO", "Chief Marketing Officer","CTO", "Chief Technology Officer","CIO","Chief Information Officer","CISO","CSO","CDO","CHRO"],
+      // Partner: [ "Partner"],
+      // Head: [
+      //   "Head",
+      // ],
+      // VP: ["Vice President"],
+      // Director: [
+      //   "Director",
+      // ],
+      // Manager: ["Manager"],
+      // FounderAndCoFounder: [
+      //   "founder","co-founder",
+      // ],
+      // Senior: ["Senior"]
+    };
+
+    // Construct a regex pattern for matching any of the industry keywords
+    const industryRegex = new RegExp(Object.values(industryMappings).flat().join('|'), 'i');
+
+    const industryCounts = await Employee.aggregate([
+      {
+        $match: {
+          jobTitle: {
+            $regex: industryRegex,
+          },
+        },
+      },
+      {
+        $unwind: "$jobTitle",
+      },
+      {
+        $match: {
+          jobTitle: {
+            $regex: industryRegex,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$jobTitle",
+          count: { $sum: 1 },
+        },
+      },
+    ]).exec();
+
+    const result = {
+      total: 0,
+    };
+
+    industryCounts.forEach(({ _id, count }) => {
+      const industryCategory = Object.keys(industryMappings).find((key) =>
+        industryMappings[key].includes(_id)
+      );
+      if (industryCategory) {
+        if (!result[industryCategory]) {
+          result[industryCategory] = 0;
+        }
+        result[industryCategory] += count;
+        result.total += count;
+      }
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+const chartForJobFunction = async (req, res) => {
+  try {
+    const industryMappings = {
+      // Marketing: ["Marketing"],
+      // CXO: ["Chief Executive Officer","CEO","CFO","Chief Financial Officer","COO" ,"Chief Operating Officer","CMO", "Chief Marketing Officer","CTO", "Chief Technology Officer","CIO","Chief Information Officer","CISO","CSO","CDO","CHRO"],
+      Finance: [ "Finance"],
+      // HR: [
+      //   "Human Resource","HR",
+      // ],
+      // IT: ["Information Technology", "Software Engineer"],
+      // Sales: [
+      //   "Sales",
+      // ],
+      // Operations: ["Operation"],
+      // FounderAndCoFounder: [
+      //   "founder","co-founder",
+      // ],
+      // Senior: ["Senior"]
+    };
+
+    // Construct a regex pattern for matching any of the industry keywords
+    const industryRegex = new RegExp(Object.values(industryMappings).flat().join('|'), 'i');
+
+    const industryCounts = await Employee.aggregate([
+      {
+        $match: {
+          jobTitle: {
+            $regex: industryRegex,
+          },
+        },
+      },
+      {
+        $unwind: "$jobTitle",
+      },
+      {
+        $match: {
+          jobTitle: {
+            $regex: industryRegex,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$jobTitle",
+          count: { $sum: 1 },
+        },
+      },
+    ]).exec();
+
+    const result = {
+      total: 0,
+    };
+
+    industryCounts.forEach(({ _id, count }) => {
+      const industryCategory = Object.keys(industryMappings).find((key) =>
+        industryMappings[key].includes(_id)
+      );
+      if (industryCategory) {
+        if (!result[industryCategory]) {
+          result[industryCategory] = 0;
+        }
+        result[industryCategory] += count;
+        result.total += count;
+      }
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
 
 const industries = {
   Accounting: ["Accounting"],
@@ -2287,7 +2434,7 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
       console.log("At company_size filter");
       const data = await Local.find({
         company_size: { $in: company_size },
-      }).limit(100000);
+      }).limit(1000);
 
       // console.log("company_size data", data);
 
@@ -2302,9 +2449,10 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
 
     if (Array.isArray(industryAndSector) && industryAndSector.length > 0) {
       // Find documents in Local collection where company_size is in the given array
+      console.log("At Industry and sector",industryAndSector)
       const data = await Local.find({
-        industries:industryAndSector
-      });
+        industries:"Accounting"
+      }).limit(10000).select("_id name");
 
       console.log("Industries data", data);
 
@@ -2349,7 +2497,7 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
     if (searchByCompanyAndWebsite.length > 0 || company_size.length > 0 || industryAndSector.length>0) {
       console.log("At searchByCompanyAndWebsite And company_size filter");
       const companyData = await Employee.find(filter).limit(length).skip(start);
-      console.log("companyData", companyData);
+      // console.log("companyData", companyData);
 
       if (companyData && companyData.length > 0) {
         const companyNames = companyData.map((cm) => cm.companyName);
@@ -2405,7 +2553,7 @@ if (Array.isArray(searchByCompanyAndWebsite) && searchByCompanyAndWebsite.length
     //   Employee.countDocuments(filter),
     //   Employee.find(filter).skip(start).limit(length),
     // ]);
-console.log("Final Data",data);
+// console.log("Final Data",data);
     if (data.length === 0) {
       res
         .status(404)
@@ -2573,6 +2721,8 @@ module.exports = {
   accountCount,
   distinctProst,
   chartForJobTitles,
+  chartForJobFunction,
+  chartForJobLevel,
   employeeFilter,
   searchByJobTitle,
   searchByDepartment,

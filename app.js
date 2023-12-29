@@ -18,8 +18,16 @@ connectDb();
 //Middlewares
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(express.static("public"));
+
+const corsOptions = {
+  origin: "http://example.com", // Replace with the actual origin of your client app
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
+};
+
+app.use(cors(corsOptions));
 
 app.use("/data", crmRoutes);
 app.use("/data", employeeRoutes);
@@ -40,15 +48,6 @@ app.get("", (req, res) => {
 });
 
 // Routes
-// app.use('/roles',roleRoutes);
-// app.use('/users',userRoutes);
-// app.use('/auth',authRoutes);
-// app.use('/restaurant',restaurantRoutes);
-// app.use('/category',categoryRoutes);
-// app.use('/product',productRoutes);
-// app.use('/order',orderRoutes);
-// app.use('/campus', campusRoutes);
-// app.use('/cart',cartRoutes);
 app.use("/data", dataRoutes);
 
 // Start the server
