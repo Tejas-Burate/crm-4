@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 const corsOptions = {
-  origin: "http://example.com", // Replace with the actual origin of your client app
+  origin: "*", // Replace with the actual origin of your client app
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
 };
